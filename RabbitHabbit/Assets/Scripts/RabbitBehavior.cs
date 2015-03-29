@@ -3,7 +3,13 @@ using System.Collections;
 
 public class RabbitBehavior : MonoBehaviour
 {
+    private float velocity = 0f;
 
+    public float Velocity
+    {
+        get { return velocity; }
+        set { velocity = value; }
+    }
 	#region Variables
 	[SerializeField]
 	private Animation rabbitAnimation;
