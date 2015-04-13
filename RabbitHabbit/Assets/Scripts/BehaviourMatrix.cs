@@ -16,7 +16,7 @@ public class BehaviourMatrix : MonoBehaviour {
 	{
 		if(behaviourMatrixInitializer)
 			behaviourMatrix = behaviourMatrixInitializer.Initialize();
-		activeEvents = new bool[GlobalVars.wolfEventLength] { false, false, false, false, false, false, false, false, false };
+		activeEvents = new bool[GlobalVars.wolfEventLength] { false, false, false, false, false, false, false, false };
 	}
 
 	public void RecieveEvent(GlobalVars.wolfEvent newEvent, bool eventIsActive)
@@ -149,7 +149,7 @@ public class BehaviourMatrix : MonoBehaviour {
 	private void ChangeState(GlobalVars.wolfState newState)
 	{
 		currentWolfState = newState;
-		//call wolf parent, let it know the state has changed
+		wolfParent.StateWasUpdated();		
 	}
 
 	
