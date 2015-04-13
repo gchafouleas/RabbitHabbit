@@ -551,6 +551,9 @@ GameObject:
   m_Component:
   - 4: {fileID: 441348}
   - 114: {fileID: 11480280}
+  - 114: {fileID: 11424006}
+  - 114: {fileID: 11430930}
+  - 114: {fileID: 11427104}
   m_Layer: 0
   m_Name: wolf
   m_TagString: Untagged
@@ -1176,6 +1179,47 @@ Animation:
   m_PlayAutomatically: 1
   m_AnimatePhysics: 0
   m_CullingType: 1
+--- !u!114 &11424006
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02171c65130efc942a9bd0b0787c2d97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  behaviourMatrixInitializer: {fileID: 11430930}
+  behaviourRecorder: {fileID: 11427104}
+  encounterStarterEvents: 0000000001000000
+  wolfParent: {fileID: 11480280}
+  currentWolfState: 4
+  activeEvents: 
+--- !u!114 &11427104
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1919a2d97d276c44a1235b87929bdd7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  matrix: {fileID: 11424006}
+  recorderIsActive: 0
+--- !u!114 &11430930
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7489452963894464dbbaf6cce07a873d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &11462634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1224,6 +1268,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rabbit: {fileID: 0}
   treeInTheWay: 0
+  losingRabbit: 0
+  lostSightTime: 0
+  LOST_SIGHT_TIME_MAX: 5
+  behaviourMatrix: {fileID: 11424006}
 --- !u!135 &13580280
 SphereCollider:
   m_ObjectHideFlags: 1
