@@ -11,6 +11,7 @@ GameObject:
   - 114: {fileID: 11467032}
   - 143: {fileID: 14367032}
   - 54: {fileID: 5467032}
+  - 82: {fileID: 8294632}
   m_Layer: 0
   m_Name: Rabbit
   m_TagString: Rabbit
@@ -46,7 +47,7 @@ GameObject:
   - 92: {fileID: 9268644}
   - 124: {fileID: 12468644}
   - 81: {fileID: 8168644}
-  - 82: {fileID: 8278992}
+  - 82: {fileID: 8227146}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -528,7 +529,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 137986}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.8299999, y: 0, z: 0}
+  m_LocalPosition: {x: 18.8299999, y: -.0299999993, z: 0}
   m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
   m_Children:
   - {fileID: 467032}
@@ -1016,7 +1017,7 @@ AudioListener:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 168644}
   m_Enabled: 1
---- !u!82 &8278992
+--- !u!82 &8227146
 AudioSource:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -1026,9 +1027,67 @@ AudioSource:
   serializedVersion: 3
   m_audioClip: {fileID: 8300000, guid: 84ff93e139fcb324a97b11638fcb1340, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: .349999994
+  m_Volume: .5
   m_Pitch: 1
   Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+--- !u!82 &8294632
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137986}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: ff68c7aba4ce80046bc5d681e8df5ba1, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: .300000012
+  m_Pitch: 1
+  Loop: 0
   Mute: 0
   Priority: 128
   DopplerLevel: 1
@@ -1124,7 +1183,7 @@ Animation:
   m_GameObject: {fileID: 171306}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: d4e9e41e11926419b84e34af42ea4757, type: 3}
+  m_Animation: {fileID: 7400000, guid: df2c2f9c223bb404a8a4f4f98ca38d92, type: 3}
   m_Animations:
   - {fileID: 7400000, guid: df2c2f9c223bb404a8a4f4f98ca38d92, type: 3}
   - {fileID: 7400000, guid: d4e9e41e11926419b84e34af42ea4757, type: 3}
@@ -1148,11 +1207,14 @@ MonoBehaviour:
   RabbitObject: {fileID: 171306}
   MainCamera: {fileID: 0}
   rotateSpeed: 3
-  Speed: 2
+  movementSpeed: 1.5
   CanAddPelettes: 0
   IsHidden: 0
   LastPlacedSentPelette: {fileID: 0}
   waterTimerElapsed: 1
+  walking: {fileID: 8300000, guid: ff68c7aba4ce80046bc5d681e8df5ba1, type: 3}
+  water_walking: {fileID: 0}
+  IsWalkingOnWater: 0
 --- !u!124 &12468644
 Behaviour:
   m_ObjectHideFlags: 1
@@ -1232,7 +1294,7 @@ CharacterController:
   m_StepOffset: .300000012
   m_SkinWidth: .0799999982
   m_MinMoveDistance: 0
-  m_Center: {x: 0, y: .100000001, z: 0}
+  m_Center: {x: 0, y: .0599999987, z: 0}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1

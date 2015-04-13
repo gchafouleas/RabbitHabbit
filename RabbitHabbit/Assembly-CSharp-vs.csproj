@@ -46,16 +46,34 @@
 	</Reference>
   </ItemGroup>
   <ItemGroup>
+     <Compile Include="Assets\Scripts\BehaviourMatrix.cs" />
+     <Compile Include="Assets\Scripts\BehaviourMatrixInitializer.cs" />
+     <Compile Include="Assets\Scripts\BehaviourMatrixTest.cs" />
+     <Compile Include="Assets\Scripts\BehaviourRecorder.cs" />
+     <Compile Include="Assets\Scripts\BurrowCollider.cs" />
      <Compile Include="Assets\Scripts\BushCollider.cs" />
+     <Compile Include="Assets\Scripts\FrontVision.cs" />
+     <Compile Include="Assets\Scripts\GamePlayController.cs" />
+     <Compile Include="Assets\Scripts\GeneticAlgoTest.cs" />
+     <Compile Include="Assets\Scripts\GlobalVars.cs" />
      <Compile Include="Assets\Scripts\MainMenuController.cs" />
+     <Compile Include="Assets\Scripts\MainTestScript.cs" />
+     <Compile Include="Assets\Scripts\PuddleColision.cs" />
      <Compile Include="Assets\Scripts\RabbitBehavior.cs" />
      <Compile Include="Assets\Scripts\SentPelette.cs" />
+     <Compile Include="Assets\Scripts\SphereVision.cs" />
+     <Compile Include="Assets\Scripts\Wolf.cs" />
      <Compile Include="Assets\SimpleCloudSystem by RM\SceneComponents\Standard Assets\Character Controllers\Sources\Scripts\MouseLook.cs" />
+     <None Include="Assets\Standard Assets\Water (Basic)\Sources\Shaders\FX-Water Simple.shader" />
      <None Include="Assets\SimpleCloudSystem by RM\Read Me.txt" />
      <None Include="Assets\SimpleCloudSystem by RM\SCS Instructions.txt" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files (x86)/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/4.6.4/UnityEngine.UI.dll</HintPath>
  </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="Assembly-CSharp-firstpass-vs.csproj">
+      <Project>{127943FD-6857-E662-6BBB-C9CB50A6C852}</Project>      <Name>Assembly-CSharp-firstpass-vs</Name>    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
