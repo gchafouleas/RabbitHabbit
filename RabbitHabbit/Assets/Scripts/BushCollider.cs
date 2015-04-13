@@ -10,7 +10,6 @@ public class BushCollider : MonoBehaviour
 		var color = this.GetComponent<MeshRenderer>().material.color; 
 		color.a = 0f;
 		this.renderer.material.color = color; 
-
 	}
 
 	void OnTriggerEnter(Collider collider) 

@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Wolf : MonoBehaviour 
 {
@@ -7,23 +8,162 @@ public class Wolf : MonoBehaviour
     private bool avoidBushCharging;
     private bool stalkBehindRabbit;
     private bool stalkBesideRabbit;
-
+    public GameObject rabbit;
+    public bool treeInTheWay = false;
+	public GlobalVars.wolfState currentWolfState = GlobalVars.wolfState.Wander;
     //Kinematic movement variables
+
+
+	private List<Wolf> wolveFriendsNear = new List<Wolf>();
+	public bool losingRabbit = false;
+	public float lostSightTime = 0f;
+	public float LOST_SIGHT_TIME_MAX = 5f;
+
+	#region Counters
+	private float lostSightCounter = 0f;
+	private const float lostSightThreshold = 1f; //time till counter expires
+
+	private bool smeltRabbit = false;
+	private float lostSmellCounter = 0f;
+	private const float lostSmellThreshold = 5f; //5 seconds if no smell
+
+	private bool heardHowl = false;
+	private float howlCounter = 0f;
+	private const float howlThreshold = 10f;
+
+	private float stateCounter = 0f; //how long you've been in one state for.
+	private const float stateCounterStayThreshold = 30f; //Do not change, tied to event name
+	private bool stateStayEventAlerted = false;
+	#endregion
+	//Kinematic movement variables
     private Vector3 directionVector = Vector3.zero;
     private float currentVelocity = 0f, maxRotateVelocity = 1.5f, maxSeekVelocity = 10f, maxFleeVelocity = 8f;
-
+	public BehaviourMatrix behaviourMatrix;
 	// Use this for initialization
 	void Start () 
     {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-	
+
+
 	}
 
+	
+	// Update is called once per frame
+	void Update ()
+	{
+		UpdateSmellHandler();
+		UpdateHowlHandler();
+		UpdateStateCounterHandler();
+
+		switch (currentWolfState)
+		{
+			case GlobalVars.wolfState.ChaseRabbit:
+				Charge();
+				break;
+			case GlobalVars.wolfState.Howl:
+				Howl();
+				break;
+			case GlobalVars.wolfState.Sniff:
+				SniffTrail();
+				break;
+			case GlobalVars.wolfState.Stalk:
+				Stalk();
+				break;
+			case GlobalVars.wolfState.Wander:
+				Wander();
+				break;
+		}
+	}
+
+	private void UpdateStateCounterHandler()
+	{
+		if(!stateStayEventAlerted)
+		{
+			stateCounter += Time.deltaTime;
+			if(stateCounter > stateCounterStayThreshold)
+			{
+				stateStayEventAlerted = true;
+				behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.InStateFor30Seconds, true);
+			}
+		}
+	}
+
+	public void StateWasUpdated(GlobalVars.wolfState newState)
+	{
+		if(stateStayEventAlerted)
+			behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.InStateFor30Seconds,false);
+
+		stateStayEventAlerted = false;
+		stateCounter = 0f;
+		currentWolfState = newState;
+	}
+
+	public void SpottedWolfFriend(Wolf wolfFriendSpotted)
+	{
+		if (!wolveFriendsNear.Contains(wolfFriendSpotted))
+		{
+			wolveFriendsNear.Add(wolfFriendSpotted);
+			WolfFriendsNearEventCaller();
+		}
+		
+	}
+	public void WolfFriendLeft(Wolf wolfFriendLeft)
+	{
+		if (wolveFriendsNear.Contains(wolfFriendLeft))
+		{
+			wolveFriendsNear.Remove(wolfFriendLeft);
+			WolfFriendsNearEventCaller();
+		}
+	}
+
+	private void WolfFriendsNearEventCaller()
+	{ //this 4x event call is somewhat calculation intesive unfortunatly
+		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.OneWolfNear, false);
+		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.TwoWolvesNear, false);
+		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.ThreeWolvesNear, false);
+
+		switch(wolveFriendsNear.Count)
+		{			
+			case 1:
+				behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.OneWolfNear, true);
+				break;
+			case 2:
+				behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.TwoWolvesNear, true);
+				break;
+			case 3:
+				behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.ThreeWolvesNear, true);
+				break;
+			default:
+				break;			
+		}
+	}
+
+	private void UpdateSmellHandler()
+	{
+		if (smeltRabbit)
+		{
+			lostSightCounter += Time.deltaTime;
+			if (lostSmellCounter > lostSmellThreshold)
+			{
+				smeltRabbit = false;
+				lostSmellCounter = 0f;
+				behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SmellRabbit, false);
+
+			}
+		}
+	}
+	private void UpdateHowlHandler()
+	{
+		if (heardHowl)
+		{
+			howlCounter += Time.deltaTime;
+			if (howlCounter > howlThreshold)
+			{
+				heardHowl = false;
+				howlCounter = 0f;
+				behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.HearHowl, false);
+			}
+		}
+	}
     private void Wander()
     {
 
@@ -45,7 +185,11 @@ public class Wolf : MonoBehaviour
 
     private void SniffTrail()
     {
+		smeltRabbit = true;
+		lostSmellCounter = 0;
+		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SmellRabbit, true);
 
+		//should be alerted of the next node and go that way
     }
 
     private void Howl()
@@ -54,17 +198,23 @@ public class Wolf : MonoBehaviour
         foreach (GameObject wolf in wolves)
         {
             if (wolf != this.gameObject)
-                wolf.GetComponent<Wolf>().HowlHeard(this.transform.position);
+                wolf.GetComponent<Wolf>().HowlHeard();
         }
     }
 
     private void AvoidBushStalking()
     {
-    }
 
-    public void HowlHeard(Vector3 wolfLocation)
+    }
+	 
+
+    public void HowlHeard()
     {
-        Debug.Log("Howl was heard");
+		if (!heardHowl)
+		{
+			behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.HearHowl, true);
+			heardHowl = true;
+		}
     }
     public void KinematicSeek(GameObject target)
     {
@@ -123,8 +273,58 @@ public class Wolf : MonoBehaviour
         transform.position = newPos;
     }
 
-    public void RabbitDetected()
+    public void RabbitDetected(GameObject _rabbit)
     {
-        Debug.Log("Rabbit Detected");
+		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SeeRabbit, true);
+		rabbit = _rabbit;
+		losingRabbit = false;
     }
+
+    public void treeDetected()
+    {
+
+    }
+	public void MaintainSight()
+	{
+		RaycastHit[] hits;
+		Vector3 rayToRabbit = rabbit.transform.position - transform.position;
+		hits = Physics.RaycastAll(transform.position, rayToRabbit.normalized, rayToRabbit.magnitude);
+		foreach (RaycastHit rayhit in hits)
+		{
+			if (rayhit.collider.tag == "Tree" || rayhit.collider.tag == "Bush")
+			{
+				if (Vector3.Distance(transform.position, rayhit.transform.position) < Vector3.Distance(transform.position, rabbit.transform.position))
+				{	//Tree or Bush is between wolf and rabbit
+					RabbitLost();
+				}
+			}
+			else
+			{
+				losingRabbit = false;
+			}
+		}
+	}
+
+	public void RabbitLost()
+	{
+		losingRabbit = true;
+	}
+
+	public void SeeingRabbit()
+	{
+		if (losingRabbit)
+		{
+			lostSightTime += Time.deltaTime;
+		}
+		else
+		{
+			lostSightTime = 0f;
+		}
+
+		if (lostSightTime >= LOST_SIGHT_TIME_MAX)
+		{
+			behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SeeRabbit, false);
+			rabbit = null;
+		}
+	}
 }

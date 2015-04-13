@@ -149,7 +149,7 @@ public class BehaviourMatrix : MonoBehaviour {
 	private void ChangeState(GlobalVars.wolfState newState)
 	{
 		currentWolfState = newState;
-		//call wolf parent, let it know the state has changed
+		wolfParent.StateWasUpdated(newState);		
 	}
 
 	
