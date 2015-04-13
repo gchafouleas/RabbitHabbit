@@ -12,6 +12,9 @@ public class Wolf : MonoBehaviour
 	private List<Wolf> wolveFriendsNear = new List<Wolf>();
 
 	public GameObject rabbit;
+	public bool losingRabbit = false;
+	public float lostSightTime = 0f;
+	public float LOST_SIGHT_TIME_MAX = 5f;
 
 	#region Counters
 	private float lostSightCounter = 0f;
@@ -178,6 +181,8 @@ public class Wolf : MonoBehaviour
     {
     }
 
+
+
     public void HowlHeard(Vector3 wolfLocation)
     {
 		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.HearHowl, true);
@@ -245,6 +250,55 @@ public class Wolf : MonoBehaviour
     {
 		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SeeRabbit, true);
 		rabbit = _rabbit;
+		losingRabbit = false;
         Debug.Log("Rabbit Detected");
     }
+
+	public void MaintainSight()
+	{
+		RaycastHit[] hits;
+		Vector3 rayToRabbit = rabbit.transform.position - transform.position;
+		hits = Physics.RaycastAll(transform.position, rayToRabbit.normalized, rayToRabbit.magnitude);
+		foreach (RaycastHit rayhit in hits)
+		{
+			Debug.Log("Raycast detected");
+			if (rayhit.collider.tag == "Tree" || rayhit.collider.tag == "Bush")
+			{
+				Debug.Log("-Detected Tree or Bush");
+				if (Vector3.Distance(transform.position, rayhit.transform.position) < Vector3.Distance(transform.position, rabbit.transform.position))
+				{	//Tree or Bush is between wolf and rabbit
+					Debug.Log("--Rabbit Obstructed by Tree or Bush");
+					RabbitLost();
+				}
+			}
+			else
+			{
+				losingRabbit = false;
+			}
+		}
+	}
+
+	public void RabbitLost()
+	{
+		losingRabbit = true;
+	}
+
+	public void SeeingRabbit()
+	{
+		if (losingRabbit)
+		{
+			lostSightTime += Time.deltaTime;
+		}
+		else
+		{
+			lostSightTime = 0f;
+		}
+
+		if (lostSightTime >= LOST_SIGHT_TIME_MAX)
+		{
+			behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SeeRabbit, false);
+			rabbit = null;
+			Debug.Log("Rabbit Lost =(");
+		}
+	}
 }

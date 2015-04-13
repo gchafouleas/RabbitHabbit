@@ -7,12 +7,22 @@ public class SphereVision : MonoBehaviour
     void OnTriggerEnter(Collider collider)
     {
         if(collider.tag.Equals("Rabbit"))
-            wolf.RabbitDetected(collider.gameObject);
+		{ 
+            wolf.RabbitDetected(collider.gameObject);s
+		}
 		if(collider.CompareTag("Wolf"))
 		{
 			wolf.SpottedWolfFriend(collider.gameObject.GetComponent<Wolf>());
 		}
     }
+
+	void OnTriggerStay(Collider collider)
+	{
+		if (collider.tag.Equals("Rabbit"))
+		{
+			wolf.MaintainSight();
+		}
+	}
 
 	void OnTriggerExit(Collider collider)
 	{
@@ -20,5 +30,7 @@ public class SphereVision : MonoBehaviour
 		{
 			wolf.WolfFriendLeft(collider.gameObject.GetComponent<Wolf>());
 		}
+		if (collider.tag.Equals("Rabbit"))
+			wolf.RabbitLost();
 	}
 }
