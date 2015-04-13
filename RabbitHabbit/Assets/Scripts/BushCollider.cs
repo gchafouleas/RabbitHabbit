@@ -19,7 +19,7 @@ public class BushCollider : MonoBehaviour
 		{
             this.rabbitInBush = true;
 			collider.gameObject.GetComponent<RabbitBehavior>().IsHidden = true;
-            collider.gameObject.GetComponent<RabbitBehavior>().movementSpeed = 5f;
+            collider.gameObject.GetComponent<RabbitBehavior>().movementSpeed = .8f;
 		}
 	}
 
@@ -29,7 +29,7 @@ public class BushCollider : MonoBehaviour
         {
             this.rabbitInBush = false;
             collider.gameObject.GetComponent<RabbitBehavior>().IsHidden = false;
-            collider.gameObject.GetComponent<RabbitBehavior>().movementSpeed = 10f;
+            collider.gameObject.GetComponent<RabbitBehavior>().movementSpeed = 1.5f;
         }
     }
 }

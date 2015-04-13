@@ -25,8 +25,8 @@ public class RabbitBehavior : MonoBehaviour
 	[SerializeField]
 	private float rotateSpeed = 3.0f;
 	[SerializeField]
-	public float movementSpeed = 10f;
-    private float rotationSpeed = 10f;
+	public float movementSpeed = 1.5f;
+    private float rotationSpeed = 30f;
 	private const float DISTANCE_BW_PELETTES = 5f;  
 	public bool CanAddPelettes = false; 
 	public bool IsHidden = false;
@@ -56,9 +56,13 @@ public class RabbitBehavior : MonoBehaviour
 	}
 	private void MoveCharacter()
 	{
-        movementVector = transform.right * Input.GetAxis("LeftJoystickY") * movementSpeed;
-		characterController.Move (movementVector*Time.deltaTime);
-        transform.Rotate(0, Input.GetAxis("RightJoystickX") * rotationSpeed, 0);
+        //Prevents the Rabbit from moving backwards
+        if (Input.GetAxis("LeftJoystickY") <= -1)
+        {
+            movementVector = transform.right * Input.GetAxis("LeftJoystickY") * movementSpeed;
+            characterController.Move(movementVector * Time.deltaTime);
+        }
+        transform.Rotate(0, Input.GetAxis("RightJoystickX") * rotationSpeed * Time.deltaTime, 0);
 	}
 	private void CheckIfAddPelette()
 	{

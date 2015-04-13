@@ -13,17 +13,20 @@ public class Wolf : MonoBehaviour
     private float currentVelocity = 0f, maxRotateVelocity = 1.5f, maxSeekVelocity = 10f, maxFleeVelocity = 8f;
 
 	// Use this for initialization
-	void Start () {
+	void Start () 
+    {
 	
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+    {
 	
 	}
 
     private void Wander()
     {
+
     }
 
     private void Charge()
@@ -32,24 +35,37 @@ public class Wolf : MonoBehaviour
 
     private void RunToHowl()
     {
+
     }
 
     private void Stalk()
     {
+
     }
 
     private void SniffTrail()
     {
+
     }
 
     private void Howl()
     {
+        GameObject[] wolves = GameObject.FindGameObjectsWithTag("Wolf");
+        foreach (GameObject wolf in wolves)
+        {
+            if (wolf != this.gameObject)
+                wolf.GetComponent<Wolf>().HowlHeard(this.transform.position);
+        }
     }
 
     private void AvoidBushStalking()
     {
     }
 
+    public void HowlHeard(Vector3 wolfLocation)
+    {
+        Debug.Log("Howl was heard");
+    }
     public void KinematicSeek(GameObject target)
     {
         directionVector = (target.transform.position - transform.position);
