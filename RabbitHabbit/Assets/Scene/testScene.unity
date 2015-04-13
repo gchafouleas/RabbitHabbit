@@ -168,6 +168,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rabbit: {fileID: 0}
   treeInTheWay: 0
+  currentWolfState: 4
   losingRabbit: 0
   lostSightTime: 0
   LOST_SIGHT_TIME_MAX: 5

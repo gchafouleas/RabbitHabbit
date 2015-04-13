@@ -12,6 +12,10 @@ public class Wolf : MonoBehaviour
     public bool treeInTheWay = false;
 	public GlobalVars.wolfState currentWolfState = GlobalVars.wolfState.Wander;
     //Kinematic movement variables
+	public float wanderTimer;
+	public float stopWanderTimer = 0.2f;
+	Vector3 wanderDirection;
+	public float moveSpeed = 5f;
 
 
 	private List<Wolf> wolveFriendsNear = new List<Wolf>();
@@ -42,8 +46,8 @@ public class Wolf : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-
-
+		wanderDirection = new Vector3(Random.rotation.x, 0f, Random.rotation.z);
+		transform.rotation = Quaternion.LookRotation(wanderDirection, Vector3.up);
 	}
 
 	
@@ -53,6 +57,9 @@ public class Wolf : MonoBehaviour
 		UpdateSmellHandler();
 		UpdateHowlHandler();
 		UpdateStateCounterHandler();
+
+		wanderTimer = Mathf.Max(0, wanderTimer - Time.deltaTime);
+		SeeingRabbit();
 
 		switch (currentWolfState)
 		{
@@ -166,7 +173,22 @@ public class Wolf : MonoBehaviour
 	}
     private void Wander()
     {
+		//if you have idled long enough, find a new wander direction and go directly toward it
+		if (stopWanderTimer == 0)
+		{
+			wanderDirection = new Vector3(Random.rotation.x, 0f, Random.rotation.z);
+			transform.rotation = Quaternion.LookRotation(wanderDirection, Vector3.up);
+			wanderTimer = (Random.value) + 1f;
+			stopWanderTimer = 1f;
 
+			wanderDirection.Normalize();
+			rigidbody.velocity = wanderDirection * moveSpeed;
+		}
+		else if (wanderTimer == 0)
+		{ //if you have wandered long enough, stop moving for some time
+			rigidbody.velocity = Vector3.zero;
+			stopWanderTimer = Mathf.Max(0, stopWanderTimer - Time.deltaTime);
+		}
     }
 
     private void Charge()
