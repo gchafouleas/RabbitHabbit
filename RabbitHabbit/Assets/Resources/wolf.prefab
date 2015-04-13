@@ -554,6 +554,8 @@ GameObject:
   - 114: {fileID: 11424006}
   - 114: {fileID: 11430930}
   - 114: {fileID: 11427104}
+  - 65: {fileID: 6543640}
+  - 54: {fileID: 5443640}
   m_Layer: 0
   m_Name: wolf
   m_TagString: Untagged
@@ -1131,6 +1133,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 441348}
   m_RootOrder: 2
+--- !u!54 &5443640
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141348}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!65 &6543640
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141348}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .360000014, y: .150000006, z: 1}
+  m_Center: {x: 0, y: -.349999994, z: .340000004}
 --- !u!65 &6562634
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1231,6 +1260,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e20bf486f9982954486e80270ae095f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  wolf: {fileID: 11480280}
 --- !u!114 &11467884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1268,6 +1298,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rabbit: {fileID: 0}
   treeInTheWay: 0
+  currentWolfState: 4
   losingRabbit: 0
   lostSightTime: 0
   LOST_SIGHT_TIME_MAX: 5
