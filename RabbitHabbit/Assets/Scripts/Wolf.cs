@@ -7,7 +7,8 @@ public class Wolf : MonoBehaviour
     private bool avoidBushCharging;
     private bool stalkBehindRabbit;
     private bool stalkBesideRabbit;
-
+    public GameObject rabbit;
+    public bool treeInTheWay = false;
     //Kinematic movement variables
     private Vector3 directionVector = Vector3.zero;
     private float currentVelocity = 0f, maxRotateVelocity = 1.5f, maxSeekVelocity = 10f, maxFleeVelocity = 8f;
@@ -15,13 +16,13 @@ public class Wolf : MonoBehaviour
 	// Use this for initialization
 	void Start () 
     {
-	
+
 	}
 	
 	// Update is called once per frame
 	void Update () 
     {
-	
+        
 	}
 
     private void Wander()
@@ -54,16 +55,21 @@ public class Wolf : MonoBehaviour
         foreach (GameObject wolf in wolves)
         {
             if (wolf != this.gameObject)
-                wolf.GetComponent<Wolf>().HowlHeard(this.transform.position);
+                wolf.GetComponent<Wolf>().HowlHeard(this.gameObject);
         }
     }
 
     private void AvoidBushStalking()
     {
+
     }
 
-    public void HowlHeard(Vector3 wolfLocation)
+    public void HowlHeard(GameObject wolfTarget)
     {
+        KinematicSeek(wolfTarget);
+        if (treeInTheWay)
+        {
+        }
         Debug.Log("Howl was heard");
     }
     public void KinematicSeek(GameObject target)
@@ -126,5 +132,10 @@ public class Wolf : MonoBehaviour
     public void RabbitDetected()
     {
         Debug.Log("Rabbit Detected");
+    }
+
+    public void treeDetected()
+    {
+
     }
 }

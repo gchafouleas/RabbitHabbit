@@ -1088,7 +1088,7 @@ MonoBehaviour:
   rabbitAnimation: {fileID: 11171366}
   RabbitObject: {fileID: 171306}
   MainCamera: {fileID: 167034}
-  rotateSpeed: 3
+  rotateSpeed: 10
   movementSpeed: 1.5
   CanAddPelettes: 0
   IsHidden: 0
