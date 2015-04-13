@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 public class BehaviourMatrix : MonoBehaviour {
 	public BehaviourMatrixInitializer behaviourMatrixInitializer;
-	//public EventRecorder
-	//Because Enum.GetLength does not work in unity, changes to this array requires a manual change to the length values
-	//below them
+	public BehaviourRecorder behaviourRecorder;
+	public List<GlobalVars.wolfEvent> encounterStarterEvents = new List<GlobalVars.wolfEvent>() { GlobalVars.wolfEvent.SeeRabbit, GlobalVars.wolfEvent.SmellRabbit};
 	public Wolf wolfParent;
 	public GlobalVars.wolfState currentWolfState = GlobalVars.wolfState.Wander;
 
@@ -15,8 +14,9 @@ public class BehaviourMatrix : MonoBehaviour {
 
 	public void Start()
 	{
-		behaviourMatrix = behaviourMatrixInitializer.Initialize();
-		activeEvents = new bool[GlobalVars.wolfEventLength] { false, false, false, false, false, false, false };
+		if(behaviourMatrixInitializer)
+			behaviourMatrix = behaviourMatrixInitializer.Initialize();
+		activeEvents = new bool[GlobalVars.wolfEventLength] { false, false, false, false, false, false, false, false };
 	}
 
 	public void RecieveEvent(GlobalVars.wolfEvent newEvent, bool eventIsActive)
@@ -25,7 +25,28 @@ public class BehaviourMatrix : MonoBehaviour {
 		GlobalVars.wolfState newState =  CheckForOptimalState();
 		if (currentWolfState != newState)
 			ChangeState(newState);
+		if(!behaviourRecorder.recorderIsActive && encounterStarterEvents.Contains(newEvent))
+		{
+			behaviourRecorder.StartRecorder();
+		}
+		if(behaviourRecorder.recorderIsActive)
+		{
+			behaviourRecorder.ReceiveEvent(currentWolfState, ActiveEventsToList());
+		}
 		//Send currentState and all ActiveEvents to recorder, if its active, itll accept and record the event list
+	}
+
+	private List<GlobalVars.wolfEvent> ActiveEventsToList()
+	{
+		List<GlobalVars.wolfEvent> toReturn = new List<GlobalVars.wolfEvent>();
+		for(int i = 0; i < activeEvents.Length; i++)
+		{
+			if(activeEvents[i])
+			{
+				toReturn.Add((GlobalVars.wolfEvent)i);
+			}
+		}
+		return toReturn;
 	}
 	public void RebalanceStates(bool encounterSuccessful, Dictionary<GlobalVars.wolfState, List<GlobalVars.wolfEvent>> statesAndEventsInvolved)
 	{
@@ -45,8 +66,36 @@ public class BehaviourMatrix : MonoBehaviour {
 		}
 	}
 
-	public string Debug_OutputBehaviourMatrix()
+	public float[][,] createOffspring(float[,] mate)
 	{
+		//given another wolves behaviourMatrix, produce two offspring using genetic algo
+		float[][,] toReturn = new float[2][,];		
+		float[,] child1 = new float[GlobalVars.wolfStateLength, GlobalVars.wolfEventLength];
+		float[,] child2 = new float[GlobalVars.wolfStateLength, GlobalVars.wolfEventLength];
+
+		for(int i_states = 0; i_states < GlobalVars.wolfStateLength; i_states++)
+		{
+			for(int i_events = 0; i_events < GlobalVars.wolfEventLength; i_events++)
+			{
+				if(i_states%2 == 0)
+				{
+					child1[i_states, i_events] = behaviourMatrix[i_states,i_events];
+					child2[i_states, i_events] = mate[i_states, i_events];
+				}
+				else
+				{
+					child1[i_states, i_events] = mate[i_states, i_events];
+					child2[i_states, i_events] = behaviourMatrix[i_states, i_events];
+				}
+			}
+		}
+		toReturn[0] = child1;
+		toReturn[1] = child2;
+		return toReturn;
+	}
+
+	public string Debug_OutputBehaviourMatrix()
+	{ //set text allign right and it almost lines up
 		string toOut = "";
 		for (int i_states = 0; i_states < GlobalVars.wolfStateLength; i_states++)
 		{
