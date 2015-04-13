@@ -10,7 +10,7 @@ public class BehaviourMatrixTest : MonoBehaviour {
 
 	public void RunTest(){
 		Dictionary<GlobalVars.wolfState, List<GlobalVars.wolfEvent>> fakeRecording = new Dictionary<GlobalVars.wolfState,List<GlobalVars.wolfEvent>>();
-		fakeRecording.Add(GlobalVars.wolfState.ChaseRabbit, new List<GlobalVars.wolfEvent>() { GlobalVars.wolfEvent.HearHowl,GlobalVars.wolfEvent.friendAttak});
+		fakeRecording.Add(GlobalVars.wolfState.ChaseRabbit, new List<GlobalVars.wolfEvent>() { GlobalVars.wolfEvent.HearHowl,GlobalVars.wolfEvent.friendAttack});
 		BMToTest.RebalanceStates(false, fakeRecording);
 		//testOutput.text = BMToTest.Debug_OutputBehaviourMatrix();
 	}	
