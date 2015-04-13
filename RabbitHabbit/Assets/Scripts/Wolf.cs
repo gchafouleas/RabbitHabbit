@@ -10,6 +10,7 @@ public class Wolf : MonoBehaviour
     private bool stalkBesideRabbit;
     public GameObject rabbit;
     public bool treeInTheWay = false;
+	public GlobalVars.wolfState currentWolfState = GlobalVars.wolfState.Wander;
     //Kinematic movement variables
 
 
@@ -53,6 +54,24 @@ public class Wolf : MonoBehaviour
 		UpdateHowlHandler();
 		UpdateStateCounterHandler();
 
+		switch (currentWolfState)
+		{
+			case GlobalVars.wolfState.ChaseRabbit:
+				Charge();
+				break;
+			case GlobalVars.wolfState.Howl:
+				Howl();
+				break;
+			case GlobalVars.wolfState.Sniff:
+				SniffTrail();
+				break;
+			case GlobalVars.wolfState.Stalk:
+				Stalk();
+				break;
+			case GlobalVars.wolfState.Wander:
+				Wander();
+				break;
+		}
 	}
 
 	private void UpdateStateCounterHandler()
@@ -68,13 +87,14 @@ public class Wolf : MonoBehaviour
 		}
 	}
 
-	public void StateWasUpdated()
+	public void StateWasUpdated(GlobalVars.wolfState newState)
 	{
 		if(stateStayEventAlerted)
 			behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.InStateFor30Seconds,false);
 
 		stateStayEventAlerted = false;
 		stateCounter = 0f;
+		currentWolfState = newState;
 	}
 
 	public void SpottedWolfFriend(Wolf wolfFriendSpotted)
@@ -169,6 +189,7 @@ public class Wolf : MonoBehaviour
 		lostSmellCounter = 0;
 		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SmellRabbit, true);
 
+		//should be alerted of the next node and go that way
     }
 
     private void Howl()
@@ -177,7 +198,7 @@ public class Wolf : MonoBehaviour
         foreach (GameObject wolf in wolves)
         {
             if (wolf != this.gameObject)
-                wolf.GetComponent<Wolf>().HowlHeard(this.gameObject);
+                wolf.GetComponent<Wolf>().HowlHeard();
         }
     }
 
@@ -185,22 +206,15 @@ public class Wolf : MonoBehaviour
     {
 
     }
+	 
 
-    public void HowlHeard(GameObject wolfTarget)
+    public void HowlHeard()
     {
-        KinematicSeek(wolfTarget);
-        if (treeInTheWay)
-        {
-        }
-    }
-
-
-
-    public void HowlHeard(Vector3 wolfLocation)
-    {
-		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.HearHowl, true);
-		heardHowl = true;			
-        Debug.Log("Howl was heard");
+		if (!heardHowl)
+		{
+			behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.HearHowl, true);
+			heardHowl = true;
+		}
     }
     public void KinematicSeek(GameObject target)
     {
@@ -264,7 +278,6 @@ public class Wolf : MonoBehaviour
 		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SeeRabbit, true);
 		rabbit = _rabbit;
 		losingRabbit = false;
-        Debug.Log("Rabbit Detected");
     }
 
     public void treeDetected()
@@ -278,13 +291,10 @@ public class Wolf : MonoBehaviour
 		hits = Physics.RaycastAll(transform.position, rayToRabbit.normalized, rayToRabbit.magnitude);
 		foreach (RaycastHit rayhit in hits)
 		{
-			Debug.Log("Raycast detected");
 			if (rayhit.collider.tag == "Tree" || rayhit.collider.tag == "Bush")
 			{
-				Debug.Log("-Detected Tree or Bush");
 				if (Vector3.Distance(transform.position, rayhit.transform.position) < Vector3.Distance(transform.position, rabbit.transform.position))
 				{	//Tree or Bush is between wolf and rabbit
-					Debug.Log("--Rabbit Obstructed by Tree or Bush");
 					RabbitLost();
 				}
 			}
@@ -315,7 +325,6 @@ public class Wolf : MonoBehaviour
 		{
 			behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SeeRabbit, false);
 			rabbit = null;
-			Debug.Log("Rabbit Lost =(");
 		}
 	}
 }

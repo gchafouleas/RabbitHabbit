@@ -3,9 +3,13 @@ using System.Collections;
 
 public class WolfTreeDetection : MonoBehaviour
 {
+	public Wolf wolf;
     void OnTriggerEnter(Collider collider)
     {
-        collider.gameObject.GetComponent<Wolf>().treeInTheWay = true;
+		if (collider.gameObject.name == "sycamore")
+		{
+			wolf.treeInTheWay = true;
+		}
     }
 
 }
