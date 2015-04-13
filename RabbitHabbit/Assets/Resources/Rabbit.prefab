@@ -1205,16 +1205,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rabbitAnimation: {fileID: 11171366}
   RabbitObject: {fileID: 171306}
-<<<<<<< HEAD
   MainCamera: {fileID: 167034}
   rotateSpeed: 10
   movementSpeed: 1.5
-=======
   MainCamera: {fileID: 0}
   rotateSpeed: 3
   movementSpeed: 1.5
   Speed: 2
->>>>>>> bbf4e2bfa3012972f9ef009f867ad0c24cea4baa
   CanAddPelettes: 0
   IsHidden: 0
   LastPlacedSentPelette: {fileID: 0}
