@@ -10,7 +10,7 @@ public class BehaviourMatrixInitializer : MonoBehaviour {
 		
 		float[,] toReturn = new float[GlobalVars.wolfStateLength,GlobalVars.wolfEventLength]
 		{
-			//EventRows  SeeRabbit,SmellRabbit,OneWolfNear,TwoWolvesNear,ThreeWolvesNear,InStateFor10Seconds, HearHowl, friendAttacks
+			//EventRows  SeeRabbit,SmellRabbit,OneWolfNear,TwoWolvesNear,ThreeWolvesNear,InStateFor10Seconds, HearHowl, friendAttacks, 
 							{0,			0,			0,			0,				0,				0,				0,				0}, //ChaseRabbit
 							{0,			0,			0,			0,				0,				0,				0,				0}, //Howl
 							{0,			0,			0,			0,				0,				0,				0,				0}, //Stalk
