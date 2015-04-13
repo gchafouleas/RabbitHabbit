@@ -107,4 +107,8 @@ public class Wolf : MonoBehaviour
         transform.position = newPos;
     }
 
+    public void RabbitDetected()
+    {
+        Debug.Log("Rabbit Detected");
+    }
 }
