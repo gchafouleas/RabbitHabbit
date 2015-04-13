@@ -7,6 +7,6 @@ public class SphereVision : MonoBehaviour
     void OnTriggerStay(Collider collider)
     {
         if(collider.tag.Equals("Rabbit"))
-            wolf.RabbitDetected();
+            wolf.RabbitDetected(collider.gameObject);
     }
 }

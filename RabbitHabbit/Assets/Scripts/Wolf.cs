@@ -8,10 +8,12 @@ public class Wolf : MonoBehaviour
     private bool stalkBehindRabbit;
     private bool stalkBesideRabbit;
 
+	public GameObject rabbit;
+	private float lostSightTime = 0f;
     //Kinematic movement variables
     private Vector3 directionVector = Vector3.zero;
     private float currentVelocity = 0f, maxRotateVelocity = 1.5f, maxSeekVelocity = 10f, maxFleeVelocity = 8f;
-
+	public BehaviourMatrix behaviourMatrix;
 	// Use this for initialization
 	void Start () 
     {
@@ -123,8 +125,10 @@ public class Wolf : MonoBehaviour
         transform.position = newPos;
     }
 
-    public void RabbitDetected()
+    public void RabbitDetected(GameObject _rabbit)
     {
+		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SeeRabbit, true);
+		rabbit = _rabbit;
         Debug.Log("Rabbit Detected");
     }
 }
