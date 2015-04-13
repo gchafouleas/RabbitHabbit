@@ -8,12 +8,21 @@ public class GamePlayController : MonoBehaviour {
 	public GameObject burrowPrefab; 
 	public GameObject Rabbit; 
 	public GameObject RestartPannel; 
+	public GameObject Wolf; 
 	// Use this for initialization
 	void Start ()
 	{
 		Instantiate (Rabbit); 
 		Instantiate (worldPrefab); 
 		Instantiate (burrowPrefab); 
+		var wolf1 = (GameObject)Instantiate (Wolf); 
+		wolf1.transform.position = new Vector3 (-60,0.8f,41); 
+		var wolf2 = (GameObject)Instantiate (Wolf); 
+		wolf2.transform.position = new Vector3 (-61,0.8f,41);
+		var wolf3 = (GameObject)Instantiate (Wolf); 
+		wolf3.transform.position = new Vector3 (-59,0.8f,41);
+		var wolf4 = (GameObject)Instantiate (Wolf); 
+		wolf4.transform.position = new Vector3 (-58, 0.8f, 41);
 	}
 	public void OnRestartClick()
 	{
