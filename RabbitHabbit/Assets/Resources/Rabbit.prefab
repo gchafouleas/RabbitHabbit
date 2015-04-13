@@ -34,18 +34,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &167034
+--- !u!1 &168644
 GameObject:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 467034}
-  - 20: {fileID: 2067032}
-  - 92: {fileID: 9267032}
-  - 124: {fileID: 12467032}
-  - 81: {fileID: 8167032}
+  - 4: {fileID: 468644}
+  - 20: {fileID: 2068644}
+  - 92: {fileID: 9268644}
+  - 124: {fileID: 12468644}
+  - 81: {fileID: 8168644}
+  - 82: {fileID: 8278992}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -546,12 +547,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 437986}
   m_RootOrder: 0
---- !u!4 &467034
+--- !u!4 &468644
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167034}
+  m_GameObject: {fileID: 168644}
   m_LocalRotation: {x: 0, y: -.707106829, z: 0, w: .707106829}
   m_LocalPosition: {x: .433333099, y: .200000018, z: 0}
   m_LocalScale: {x: 1.33333325, y: 1.33333337, z: 1.33333325}
@@ -570,7 +571,7 @@ Transform:
   m_Children:
   - {fileID: 471312}
   - {fileID: 471362}
-  - {fileID: 467034}
+  - {fileID: 468644}
   m_Father: {fileID: 437986}
   m_RootOrder: 1
 --- !u!4 &471308
@@ -961,12 +962,12 @@ Transform:
   - {fileID: 471322}
   m_Father: {fileID: 471362}
   m_RootOrder: 0
---- !u!20 &2067032
+--- !u!20 &2068644
 Camera:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167034}
+  m_GameObject: {fileID: 168644}
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
@@ -1008,19 +1009,77 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!81 &8167032
+--- !u!81 &8168644
 AudioListener:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167034}
+  m_GameObject: {fileID: 168644}
   m_Enabled: 1
---- !u!92 &9267032
+--- !u!82 &8278992
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 168644}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_audioClip: {fileID: 8300000, guid: 84ff93e139fcb324a97b11638fcb1340, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: .349999994
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+--- !u!92 &9268644
 Behaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167034}
+  m_GameObject: {fileID: 168644}
   m_Enabled: 1
 --- !u!108 &10867032
 Light:
@@ -1087,17 +1146,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rabbitAnimation: {fileID: 11171366}
   RabbitObject: {fileID: 171306}
-  MainCamera: {fileID: 167034}
+  MainCamera: {fileID: 0}
   rotateSpeed: 3
   Speed: 2
+  CanAddPelettes: 0
   IsHidden: 0
   LastPlacedSentPelette: {fileID: 0}
---- !u!124 &12467032
+  waterTimerElapsed: 1
+--- !u!124 &12468644
 Behaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 167034}
+  m_GameObject: {fileID: 168644}
   m_Enabled: 1
 --- !u!137 &13771366
 SkinnedMeshRenderer:
