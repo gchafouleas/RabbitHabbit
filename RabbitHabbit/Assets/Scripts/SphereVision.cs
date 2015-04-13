@@ -8,7 +8,7 @@ public class SphereVision : MonoBehaviour
     {
         if(collider.tag.Equals("Rabbit"))
 		{ 
-            wolf.RabbitDetected(collider.gameObject);s
+            wolf.RabbitDetected(collider.gameObject);
 		}
 		if(collider.CompareTag("Wolf"))
 		{

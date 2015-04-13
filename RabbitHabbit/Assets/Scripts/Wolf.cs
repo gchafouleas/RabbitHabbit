@@ -8,15 +8,12 @@ public class Wolf : MonoBehaviour
     private bool avoidBushCharging;
     private bool stalkBehindRabbit;
     private bool stalkBesideRabbit;
-<<<<<<< HEAD
     public GameObject rabbit;
     public bool treeInTheWay = false;
     //Kinematic movement variables
-=======
+
 
 	private List<Wolf> wolveFriendsNear = new List<Wolf>();
-
-	public GameObject rabbit;
 	public bool losingRabbit = false;
 	public float lostSightTime = 0f;
 	public float LOST_SIGHT_TIME_MAX = 5f;
@@ -38,24 +35,16 @@ public class Wolf : MonoBehaviour
 	private bool stateStayEventAlerted = false;
 	#endregion
 	//Kinematic movement variables
->>>>>>> bbf4e2bfa3012972f9ef009f867ad0c24cea4baa
     private Vector3 directionVector = Vector3.zero;
     private float currentVelocity = 0f, maxRotateVelocity = 1.5f, maxSeekVelocity = 10f, maxFleeVelocity = 8f;
 	public BehaviourMatrix behaviourMatrix;
 	// Use this for initialization
 	void Start () 
     {
-<<<<<<< HEAD
+
 
 	}
-	
-	// Update is called once per frame
-	void Update () 
-    {
-        
-=======
-		
-	}
+
 	
 	// Update is called once per frame
 	void Update ()
@@ -86,7 +75,6 @@ public class Wolf : MonoBehaviour
 
 		stateStayEventAlerted = false;
 		stateCounter = 0f;
->>>>>>> bbf4e2bfa3012972f9ef009f867ad0c24cea4baa
 	}
 
 	public void SpottedWolfFriend(Wolf wolfFriendSpotted)
@@ -198,21 +186,20 @@ public class Wolf : MonoBehaviour
 
     }
 
-<<<<<<< HEAD
     public void HowlHeard(GameObject wolfTarget)
     {
         KinematicSeek(wolfTarget);
         if (treeInTheWay)
         {
         }
-=======
+    }
+
 
 
     public void HowlHeard(Vector3 wolfLocation)
     {
 		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.HearHowl, true);
 		heardHowl = true;			
->>>>>>> bbf4e2bfa3012972f9ef009f867ad0c24cea4baa
         Debug.Log("Howl was heard");
     }
     public void KinematicSeek(GameObject target)
@@ -280,12 +267,10 @@ public class Wolf : MonoBehaviour
         Debug.Log("Rabbit Detected");
     }
 
-<<<<<<< HEAD
     public void treeDetected()
     {
 
     }
-=======
 	public void MaintainSight()
 	{
 		RaycastHit[] hits;
@@ -333,5 +318,4 @@ public class Wolf : MonoBehaviour
 			Debug.Log("Rabbit Lost =(");
 		}
 	}
->>>>>>> bbf4e2bfa3012972f9ef009f867ad0c24cea4baa
 }
