@@ -16,7 +16,7 @@ public class Wolf : MonoBehaviour
     //Kinematic movement variables
 	public float wanderTimer;
 	public float stopWanderTimer = 0.2f;
-	Vector3 wanderDirection;
+	public Vector3 wanderDirection;
 	public float moveSpeed = 1f;
 
 	private List<Wolf> wolveFriendsNear = new List<Wolf>();
@@ -221,7 +221,8 @@ public class Wolf : MonoBehaviour
 			if (stopWanderTimer == 0)
 			{
 				wanderDirection = new Vector3(Random.rotation.x, 0f, Random.rotation.z);
-				transform.rotation = Quaternion.LookRotation(wanderDirection, Vector3.up);
+				rotateTowards (wanderDirection);
+				//transform.rotation = Quaternion.LookRotation(wanderDirection, Vector3.up);
 				wanderTimer = (Random.value) + 1f;
 				stopWanderTimer = 1f;
 				
