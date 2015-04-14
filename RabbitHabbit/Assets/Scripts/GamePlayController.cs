@@ -21,7 +21,7 @@ public class GamePlayController : MonoBehaviour {
 		Instantiate (worldPrefab); 
 		Instantiate (burrowPrefab); 
 		var wolf1 = (GameObject)Instantiate (Wolf); 
-		wolf1.transform.position = new Vector3 (-60,0.8f,41); 
+		wolf1.transform.position = new Vector3 (5,0.8f,4); 
 		var wolf2 = (GameObject)Instantiate (Wolf); 
 		wolf2.transform.position = new Vector3 (-61,0.8f,41);
 		var wolf3 = (GameObject)Instantiate (Wolf); 
