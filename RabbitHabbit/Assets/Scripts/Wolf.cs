@@ -91,6 +91,7 @@ public class Wolf : MonoBehaviour
                     RunToHowl(wolfThatHowledLocation);
                 break;
 		}
+		AngleFix();
 	}
 
 	private void UpdateStateCounterHandler()
@@ -390,8 +391,16 @@ public class Wolf : MonoBehaviour
         this.transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, maxRotateVelocity * Time.deltaTime);
         Vector3 newPos = transform.position + (maxSeekVelocity * Time.deltaTime) * directionVector;
         transform.position = newPos;
+		
     }
 
+	private void AngleFix()
+	{
+		transform.position = new Vector3(transform.position.x, 0.81f, transform.position.z);
+		Vector3 eulerAngles = transform.rotation.eulerAngles;
+		eulerAngles = new Vector3(0, eulerAngles.y, 0);
+		transform.rotation = Quaternion.Euler(eulerAngles);
+	}
     public void KinematicArrive(GameObject target)
     {
         directionVector = (target.transform.position - transform.position);
