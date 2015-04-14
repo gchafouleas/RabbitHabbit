@@ -129,14 +129,14 @@ public class RabbitBehavior : MonoBehaviour
 		ObjectToRotate.transform.rotation = Quaternion.Slerp(ObjectToRotate.transform.rotation, lookRotation, donePercentage);
 	}
 
-	public void OnCollisionEnter(Collision collision)
+	public void OnTriggerEnter(Collider collision)
 	{
 		if(collision.gameObject.CompareTag("Wolf"))
 		{
 			GamePlayController gpc = GameObject.FindObjectOfType<GamePlayController>();
 			gpc.loses++; 
 			gpc.winText.text = "Wins: "+gpc.wins;  
-			gpc.winText.text = "Loses: "+gpc.loses;
+			gpc.losesText.text = "Loses: "+gpc.loses;
 			gpc.RestartPannel.SetActive(true);
 			GameObject[] allWolves = GameObject.FindGameObjectsWithTag("Wolf");
  			foreach(GameObject wolf in allWolves)

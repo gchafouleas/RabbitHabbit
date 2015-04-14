@@ -348,13 +348,13 @@ public class Wolf : MonoBehaviour
 
     public void Howl()
     {
-        GameObject[] wolves = GameObject.FindGameObjectsWithTag("Wolf");
+		Wolf[] wolves = GameObject.FindObjectsOfType<Wolf>();
 		AudioSource sound = this.gameObject.GetComponent<AudioSource> ();
 		sound.Play (); 
-        foreach (GameObject wolf in wolves)
+        foreach (Wolf wolf in wolves)
         {
             if (wolf != this.gameObject)
-                wolf.GetComponent<Wolf>().HowlHeard(this.gameObject);
+                wolf.gameObject.GetComponent<Wolf>().HowlHeard(this.gameObject);
         }
     }
 
