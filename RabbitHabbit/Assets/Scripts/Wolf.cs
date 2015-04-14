@@ -414,7 +414,7 @@ public class Wolf : MonoBehaviour
 		hits = Physics.RaycastAll(transform.position, rayToRabbit.normalized, rayToRabbit.magnitude);
 		foreach (RaycastHit rayhit in hits)
 		{
-			if (rayhit.collider.tag == "Tree" || rayhit.collider.tag == "Bush")
+			if (rayhit.collider.gameObject.name == "sycamore" || rayhit.collider.gameObject.name == "Bush 05 prefab")
 			{
 				if (Vector3.Distance(transform.position, rayhit.transform.position) < Vector3.Distance(transform.position, rabbit.transform.position))
 				{	//Tree or Bush is between wolf and rabbit

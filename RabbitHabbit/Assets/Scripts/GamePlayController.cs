@@ -39,7 +39,13 @@ public class GamePlayController : MonoBehaviour {
 		rabbit.GetComponent<RabbitBehavior> ().SetInitialPellets (); 
 		RestartPannel.SetActive (false);
 		BreedHighestScoringWolves();
-		//TODO:add set up of genetic wolfs. 
+		GameObject[] allWolves = GameObject.FindGameObjectsWithTag("Wolf");
+		allWolves[0].transform.position = new Vector3 (-60,0.8f,41); 
+		allWolves[1].transform.position = new Vector3 (-61,0.8f,41);
+		allWolves[2].transform.position = new Vector3 (-59,0.8f,41);
+		allWolves[3].transform.position = new Vector3 (-58, 0.8f, 41);
+			
+			
 	}
 	public void OnReturnMainMenuClicked()
 	{
