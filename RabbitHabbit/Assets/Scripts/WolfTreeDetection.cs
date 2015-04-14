@@ -10,6 +10,10 @@ public class WolfTreeDetection : MonoBehaviour
 		{
 			wolf.treeInTheWay = true;
 		}
+		if(collider.CompareTag("Boundary"))
+		{
+			wolf.boundaryInWay = true; 
+		}
     }
 
 }

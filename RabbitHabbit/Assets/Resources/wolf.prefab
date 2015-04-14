@@ -554,9 +554,7 @@ GameObject:
   - 114: {fileID: 11424006}
   - 114: {fileID: 11430930}
   - 114: {fileID: 11427104}
-  - 65: {fileID: 6543640}
   - 54: {fileID: 5443640}
-  - 65: {fileID: 6568668}
   - 82: {fileID: 8206570}
   m_Layer: 0
   m_Name: wolf
@@ -577,6 +575,23 @@ GameObject:
   - 114: {fileID: 11462634}
   m_Layer: 0
   m_Name: Tree Collider Vision
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &170960
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 470960}
+  - 65: {fileID: 6570960}
+  - 114: {fileID: 11434252}
+  m_Layer: 0
+  m_Name: wolfBodyCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1090,13 +1105,14 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 141348}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.61199999, y: .809000015, z: 0}
+  m_LocalPosition: {x: 0, y: .810000002, z: 0}
   m_LocalScale: {x: .699999988, y: 1, z: .699999988}
   m_Children:
   - {fileID: 441346}
   - {fileID: 480278}
   - {fileID: 480280}
   - {fileID: 462634}
+  - {fileID: 470960}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &462634
@@ -1111,6 +1127,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 441348}
   m_RootOrder: 3
+--- !u!4 &470960
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170960}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -.630999982, z: .239999995}
+  m_LocalScale: {x: 1, y: .214843616, z: 1}
+  m_Children: []
+  m_Father: {fileID: 441348}
+  m_RootOrder: 4
 --- !u!4 &480278
 Transform:
   m_ObjectHideFlags: 1
@@ -1148,20 +1176,8 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 84
   m_CollisionDetection: 0
---- !u!65 &6543640
-BoxCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 141348}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: .360000014, y: .150000006, z: 1}
-  m_Center: {x: 0, y: -.349999994, z: .340000004}
 --- !u!65 &6562634
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1174,18 +1190,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &6568668
+--- !u!65 &6570960
 BoxCollider:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 141348}
+  m_GameObject: {fileID: 170960}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: .360000014, y: .150000006, z: 1}
-  m_Center: {x: 0, y: -.349999994, z: .340000004}
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!65 &6580280
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1322,6 +1338,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7489452963894464dbbaf6cce07a873d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &11434252
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 170960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27a4033a09a7c394daf4694cbdbc0a91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wolf: {fileID: 11480280}
 --- !u!114 &11462634
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1371,15 +1399,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rabbit: {fileID: 0}
   wolfThatHowledLocation: {fileID: 0}
+  pellet: {fileID: 0}
   treeInTheWay: 0
   currentWolfState: 4
   wanderTimer: 0
   stopWanderTimer: .200000003
-  moveSpeed: 5
+  moveSpeed: 1
   losingRabbit: 0
   lostSightTime: 0
   LOST_SIGHT_TIME_MAX: 5
+  MAX_STALK_DISTANCE: 7
+  smeltRabbit: 0
   behaviourMatrix: {fileID: 11424006}
+  boundaryInWay: 0
 --- !u!135 &13580280
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -1390,7 +1422,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 10.5100002
+  m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!137 &13741276
 SkinnedMeshRenderer:

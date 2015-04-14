@@ -10,14 +10,14 @@ public class Wolf : MonoBehaviour
     private bool stalkBesideRabbit;
     public GameObject rabbit;
     public GameObject wolfThatHowledLocation;
-    private SentPelette pellet;
+    public SentPelette pellet;
     public bool treeInTheWay = false;
 	public GlobalVars.wolfState currentWolfState;
     //Kinematic movement variables
 	public float wanderTimer;
 	public float stopWanderTimer = 0.2f;
 	Vector3 wanderDirection;
-	public float moveSpeed = 5f;
+	public float moveSpeed = 1f;
 
 	private List<Wolf> wolveFriendsNear = new List<Wolf>();
 	public bool losingRabbit = false;
@@ -45,6 +45,8 @@ public class Wolf : MonoBehaviour
     private Vector3 directionVector = Vector3.zero;
     private float currentVelocity = 0f, maxRotateVelocity = 2.5f, maxSeekVelocity = 1f, maxFleeVelocity = 8f;
 	public BehaviourMatrix behaviourMatrix;
+	public bool boundaryInWay = false; 
+	private Vector3 boundaryAvoidanceTarget = Vector3.zero; 
 	// Use this for initialization
 	void Start () 
     {
@@ -153,7 +155,21 @@ public class Wolf : MonoBehaviour
 				break;			
 		}
 	}
-
+	public void AvoidBoundary()
+	{
+		// If the target for avoiding a tree is not set, set it
+		if (boundaryAvoidanceTarget == Vector3.zero)
+		{
+			boundaryAvoidanceTarget = new Vector3(this.transform.position.x, this.transform.position.y, this.transform.position.z - 2);
+		}
+		
+		// rotate towards the new tree avoidance target
+		if (rotateTowards(boundaryAvoidanceTarget))
+		{
+			boundaryInWay = false;
+			boundaryAvoidanceTarget = Vector3.zero;
+		}
+	}
 	private void UpdateSmellHandler()
 	{
 		if (smeltRabbit)
@@ -183,46 +199,65 @@ public class Wolf : MonoBehaviour
 	}
     private void Wander()
     {
-		//if you have idled long enough, find a new wander direction and go directly toward it
-		if (stopWanderTimer == 0)
+		if(!treeInTheWay && !boundaryInWay)
 		{
-			wanderDirection = new Vector3(Random.rotation.x, 0f, Random.rotation.z);
-			transform.rotation = Quaternion.LookRotation(wanderDirection, Vector3.up);
-			wanderTimer = (Random.value) + 1f;
-			stopWanderTimer = 1f;
-
-			wanderDirection.Normalize();
-			rigidbody.velocity = wanderDirection * moveSpeed;
+			//if you have idled long enough, find a new wander direction and go directly toward it
+			if (stopWanderTimer == 0)
+			{
+				wanderDirection = new Vector3(Random.rotation.x, 0f, Random.rotation.z);
+				transform.rotation = Quaternion.LookRotation(wanderDirection, Vector3.up);
+				wanderTimer = (Random.value) + 1f;
+				stopWanderTimer = 1f;
+				
+				wanderDirection.Normalize();
+				rigidbody.velocity = wanderDirection * moveSpeed;
+			}
+			else if (wanderTimer == 0)
+			{ //if you have wandered long enough, stop moving for some time
+				rigidbody.velocity = Vector3.zero;
+				stopWanderTimer = Mathf.Max(0, stopWanderTimer - Time.deltaTime);
+			}
 		}
-		else if (wanderTimer == 0)
-		{ //if you have wandered long enough, stop moving for some time
-			rigidbody.velocity = Vector3.zero;
-			stopWanderTimer = Mathf.Max(0, stopWanderTimer - Time.deltaTime);
+		else if( treeInTheWay)
+		{
+			AvoidTree(); 
+		}
+		else if(boundaryInWay)
+		{
+			AvoidBoundary(); 
 		}
     }
 
     private void Charge()
     {
-        if (!treeInTheWay)
+        if (!treeInTheWay && !boundaryInWay)
         {
             KinematicSeek(rabbit);
         }
-        else
+        else if(treeInTheWay)
         {
             AvoidTree();
         }
+		else if(boundaryInWay)
+		{
+			AvoidBoundary(); 
+		}
     }
 
     private void RunToHowl(GameObject wolfLocation)
     {
-        if (!treeInTheWay)
+        if (!treeInTheWay && !boundaryInWay)
         {
             KinematicSeek(wolfLocation);
         }
-        else
+        else if(treeInTheWay)
         {
             AvoidTree(); 
         }
+		else if(boundaryInWay)
+		{
+			AvoidBoundary(); 
+		}
     }
 
     private void AvoidTree()
@@ -253,13 +288,17 @@ public class Wolf : MonoBehaviour
     {
 		if (Vector3.Distance(transform.position, rabbit.transform.position) > MAX_STALK_DISTANCE)
 		{
-			if (!treeInTheWay)
+			if (!treeInTheWay && !boundaryInWay)
 			{
 				KinematicSeek(rabbit);
 			}
-			else
+			else if(treeInTheWay)
 			{
 				AvoidTree();
+			}
+			else if(boundaryInWay)
+			{
+				AvoidBoundary(); 
 			}
 		}
 		else
@@ -273,28 +312,35 @@ public class Wolf : MonoBehaviour
 		smeltRabbit = true;
 		lostSmellCounter = 0;
 		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SmellRabbit, true);
+		if(pellet !=null)
+		{
+			//should be alerted of the next node and go that way
+			if (!treeInTheWay && ! boundaryInWay)
+			{
+				KinematicSeekVector(pellet.transform.position);
+			}
+			else if(boundaryInWay)
+			{
+				AvoidBoundary(); 
+			}
+			else if(treeInTheWay)
+			{
+				AvoidTree();
+			}
+			
+			if (Vector3.Distance(this.transform.position, pellet.transform.position) < 0.1)
+			{
+				if (pellet.NextSentPelette != null)
+				{
+					pellet = pellet.NextSentPelette;
+				}
+				else
+				{
+					currentWolfState = GlobalVars.wolfState.Wander; 
+				}
+			}
+		}
 
-		//should be alerted of the next node and go that way
-        if (!treeInTheWay)
-        {
-            KinematicSeekVector(pellet.transform.position);
-        }
-        else
-        {
-            AvoidTree();
-        }
-
-        if (Vector3.Distance(this.transform.position, pellet.transform.position) < 0.1)
-        {
-            if (pellet.NextSentPelette != null)
-            {
-                pellet = pellet.NextSentPelette;
-            }
-            else
-            {
-                //TODO Matt: Change Action/Event when last pellet has been reached.
-            }
-        }
     }
 
     public void Howl()
