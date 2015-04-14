@@ -42,3 +42,10 @@ RabbitHabbit/RabbitHabbit-csharp.sln
 *.csproj
 RabbitHabbit/Assembly-CSharp-vs.csproj
 *.sln
+*.csproj
+RabbitHabbit/Assembly-CSharp-vs.csproj
+*.csproj
+RabbitHabbit/Assembly-CSharp.csproj
+*.csproj
+RabbitHabbit/RabbitHabbit-csharp.sln
+*.sln

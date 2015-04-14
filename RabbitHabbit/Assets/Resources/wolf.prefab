@@ -558,7 +558,7 @@ GameObject:
   - 82: {fileID: 8206570}
   m_Layer: 0
   m_Name: wolf
-  m_TagString: Untagged
+  m_TagString: Wolf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -592,7 +592,7 @@ GameObject:
   - 114: {fileID: 11434252}
   m_Layer: 0
   m_Name: wolfBodyCollider
-  m_TagString: Untagged
+  m_TagString: Wolf
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

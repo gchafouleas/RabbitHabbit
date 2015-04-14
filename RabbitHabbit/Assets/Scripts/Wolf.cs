@@ -16,7 +16,7 @@ public class Wolf : MonoBehaviour
     //Kinematic movement variables
 	public float wanderTimer;
 	public float stopWanderTimer = 0.2f;
-	Vector3 wanderDirection;
+	public Vector3 wanderDirection;
 	public float moveSpeed = 1f;
 
 	private List<Wolf> wolveFriendsNear = new List<Wolf>();
