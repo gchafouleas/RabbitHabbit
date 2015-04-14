@@ -336,7 +336,9 @@ public class Wolf : MonoBehaviour
 				}
 				else
 				{
-					currentWolfState = GlobalVars.wolfState.Wander; 
+					smeltRabbit = false;
+					lostSmellCounter = 0f;
+					behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SmellRabbit, false);
 				}
 			}
 		}

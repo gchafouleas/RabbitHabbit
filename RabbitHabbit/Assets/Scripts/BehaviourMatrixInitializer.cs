@@ -22,6 +22,7 @@ public class BehaviourMatrixInitializer : MonoBehaviour {
 							{.6f,		0,		   .2f,		  -.3f,		      -.6f,				0,				0,				0}, //Stalk
 							{-2,		1,			0,			0,				0,				0,				0,				0}, //Sniff
 							{-2,	   -2,			0,			0,				0,				3,				0,				0}, //Wander
+							{-1,       -1,          0,          0,              0,              0,              2,             -1}
 			};
 		}
 		else
@@ -35,6 +36,7 @@ public class BehaviourMatrixInitializer : MonoBehaviour {
 							{.8f,		0,		   .2f,		  -.6f,		      -.6f,				.5f,			0,				0}, //Stalk
 							{-1,		.4f,			0,			0,				 0,				0,				0,				0}, //Sniff
 							{-2,	   -2,			0,			0,			   .2f,				3,				.2f,				0}, //Wander
+							{-1,       -1,          0,          0,              0,              0,              2,             -1}  //runToHowl
 			};
 		}
 

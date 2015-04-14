@@ -136,12 +136,13 @@ public class BehaviourMatrix : MonoBehaviour {
 	}
 	private GlobalVars.wolfState CheckForOptimalState()
 	{
-		float[] scores = new float[GlobalVars.wolfStateLength]{0,0,0,0,0};
+		float[] scores = new float[GlobalVars.wolfStateLength]{0,0,0,0,0,0};
 		//Chase and stalk 0,2 require wolf.rabbit
 		//3 requires wolf.smeltRabbit
+		//5 requires wolf.wolfThatHowledLocation
 		for (int i_state = 0; i_state < GlobalVars.wolfStateLength; i_state++)
 		{
-			if(((i_state == 0 || i_state == 2) && (!wolfParent.rabbit)) || (i_state == 3 && !wolfParent.smeltRabbit))
+			if(((i_state == 0 || i_state == 2) && (!wolfParent.rabbit)) || (i_state == 3 && !wolfParent.smeltRabbit) || (i_state == 5 && !wolfParent.wolfThatHowledLocation))
 			{
 				scores[i_state] = -5f;
 				continue; //invalid states if no rabbit sighted or smelt
