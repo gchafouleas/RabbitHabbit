@@ -12,10 +12,10 @@ public class BurrowCollider : MonoBehaviour {
 			{
 				wolf.GetComponent<BehaviourRecorder>().EndRecorder(false);
 			}
+			GamePlayController gamePlayController = GameObject.FindObjectOfType<GamePlayController>();
 			gamePlayController.wins++; 
 			gamePlayController.winText.text = "Wins: "+gamePlayController.wins;  
 			gamePlayController.winText.text = "Loses: "+gamePlayController.loses;
-			GamePlayController gamePlayController = GameObject.FindObjectOfType<GamePlayController>();
 			gamePlayController.RestartPannel.SetActive(true);
 		}
 	}
