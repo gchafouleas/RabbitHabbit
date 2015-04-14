@@ -21,13 +21,13 @@ public class GamePlayController : MonoBehaviour {
 		Instantiate (worldPrefab); 
 		Instantiate (burrowPrefab); 
 		var wolf1 = (GameObject)Instantiate (Wolf); 
-		wolf1.transform.position = new Vector3 (5,0.8f,4); 
-		var wolf2 = (GameObject)Instantiate (Wolf); 
-		wolf2.transform.position = new Vector3 (-61,0.8f,41);
-		var wolf3 = (GameObject)Instantiate (Wolf); 
-		wolf3.transform.position = new Vector3 (-59,0.8f,41);
-		var wolf4 = (GameObject)Instantiate (Wolf); 
-		wolf4.transform.position = new Vector3 (-58, 0.8f, 41);
+		wolf1.transform.position = new Vector3 (-27,0.8f,7); 
+		var wolf2 = (GameObject)Instantiate (Wolf);
+		wolf2.transform.position = new Vector3(-27, 0.8f, 14);
+		var wolf3 = (GameObject)Instantiate (Wolf);
+		wolf3.transform.position = new Vector3(-27, 0.8f, 21);
+		var wolf4 = (GameObject)Instantiate (Wolf);
+		wolf4.transform.position = new Vector3(-27, 0.8f, 28);
 	}
 	public void OnRestartClick()
 	{
@@ -44,10 +44,10 @@ public class GamePlayController : MonoBehaviour {
 		RestartPannel.SetActive (false);
 		BreedHighestScoringWolves();
 		Wolf[] allWolves = GameObject.FindObjectsOfType<Wolf>();
-		allWolves[0].transform.position = new Vector3 (-60,0.8f,41); 
-		allWolves[1].transform.position = new Vector3 (-61,0.8f,41);
-		allWolves[2].transform.position = new Vector3 (-59,0.8f,41);
-		allWolves[3].transform.position = new Vector3 (-58, 0.8f, 41);
+		allWolves[0].transform.position = new Vector3 (-24,0.8f,7); 
+		allWolves[1].transform.position = new Vector3 (-24,0.8f,14);
+		allWolves[2].transform.position = new Vector3 (-24,0.8f,21);
+		allWolves[3].transform.position = new Vector3 (-24, 0.8f, 28);
 			
 			
 	}

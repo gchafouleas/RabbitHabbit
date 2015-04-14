@@ -13,11 +13,11 @@ public class BehaviourMatrix : MonoBehaviour {
 	public float[,] behaviourMatrix;
 	public bool[] activeEvents;
 
-	public void Start()
+	public void Awake()
 	{
 		if(behaviourMatrixInitializer)
 			behaviourMatrix = behaviourMatrixInitializer.Initialize();
-		activeEvents = new bool[GlobalVars.wolfEventLength] { false, false, false, false, false, false, false, false, false };
+		activeEvents = new bool[GlobalVars.wolfEventLength] { false, false, false, false, false, false, false, false, false };		
 	}
 
 	public void ResetBehaviourMatrix()
@@ -25,6 +25,7 @@ public class BehaviourMatrix : MonoBehaviour {
 		currentWolfState = GlobalVars.wolfState.Wander;
 		wolfParent.currentWolfState = GlobalVars.wolfState.Wander;
 		pointsRebalanced = 0f;
+		
 		activeEvents = new bool[GlobalVars.wolfEventLength] { false, false, false, false, false, false, false, false, false };
 	}
 	public void RecieveEvent(GlobalVars.wolfEvent newEvent, bool eventIsActive)
@@ -155,13 +156,10 @@ public class BehaviourMatrix : MonoBehaviour {
 				continue; //invalid states if no rabbit sighted or smelt
 			}
 			for (int i_event = 0; i_event < GlobalVars.wolfEventLength; i_event++)
-				if (activeEvents[(int)i_event])
-				{
-					Debug.Log("Istate: " + i_state + "  i_event: " + i_event);
-					scores[i_state] += behaviourMatrix[i_state, i_event];
-				}
-				
-				
+			{
+				if (activeEvents[(int)i_event])				
+					scores[i_state] += behaviourMatrix[i_state, i_event];				
+			}
 		}
 				
 		int winningState = 0;
@@ -175,6 +173,9 @@ public class BehaviourMatrix : MonoBehaviour {
 				winningState = i;
 			}
 		}
+
+		if ((GlobalVars.wolfState)winningState == GlobalVars.wolfState.Howl)
+			Debug.Log("I wanna howls");
 		
 		return (GlobalVars.wolfState)winningState;
 	}
