@@ -23,6 +23,7 @@ public class Wolf : MonoBehaviour
 	public bool losingRabbit = false;
 	public float lostSightTime = 0f;
 	public float LOST_SIGHT_TIME_MAX = 5f;
+	public float MAX_STALK_DISTANCE = 7f;
     private Vector3 treeAvoidanceTarget = Vector3.zero;
 	#region Counters
 	private float lostSightCounter = 0f;
@@ -250,14 +251,21 @@ public class Wolf : MonoBehaviour
 
     private void Stalk()
     {
-        if (!treeInTheWay)
-        {
-            KinematicSeek(rabbit);
-        }
-        else
-        {
-            AvoidTree();
-        }
+		if (Vector3.Distance(transform.position, rabbit.transform.position) > MAX_STALK_DISTANCE)
+		{
+			if (!treeInTheWay)
+			{
+				KinematicSeek(rabbit);
+			}
+			else
+			{
+				AvoidTree();
+			}
+		}
+		else
+		{
+			rotateTowards(rabbit.transform.position);
+		}
     }
 
     private void SniffTrail()
