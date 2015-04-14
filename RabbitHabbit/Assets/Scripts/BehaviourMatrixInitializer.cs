@@ -16,13 +16,13 @@ public class BehaviourMatrixInitializer : MonoBehaviour {
 			//balanced weights
 			toReturn = new float[GlobalVars.wolfStateLength, GlobalVars.wolfEventLength]
 			{
-			//EventRows  SeeRabbit,SmellRabbit,OneWolfNear,TwoWolvesNear,ThreeWolvesNear,InStateFor30Seconds, HearHowl, friendAttacks, 
-							{.8f,		0,		   .2f,		   .2f,			   .4f,				0,				.2f,		  .6f}, //ChaseRabbit
-							{.6f,		0,		  -.2f,		  -.4f,			  -.6f,				0,				0,				0}, //Howl
-							{.6f,		0,		   .2f,		  -.3f,		      -.6f,				0,				0,				0}, //Stalk
-							{-2,		1,			0,			0,				0,				0,				0,				0}, //Sniff
-							{-2,	   -2,			0,			0,				0,				3,				0,				0}, //Wander
-							{-1,       -1,          0,          0,              0,              0,              2,             -1} //run to howl
+			//EventRows  SeeRabbit,SmellRabbit,OneWolfNear,TwoWolvesNear,ThreeWolvesNear,InStateFor30Seconds, HearHowl, friendAttacks, InStateFor5Seconds
+							{.8f,		0,		   .2f,		   .2f,			   .4f,				0,				.2f,		  .6f,			0}, //ChaseRabbit
+							{.6f,		0,		  -.2f,		  -.4f,			  -.6f,				0,				0,				0,			0}, //Howl
+							{.6f,		0,		   .2f,		  -.3f,		      -.6f,				0,				0,				0,			0}, //Stalk
+							{-2,		1,			0,			0,				0,				0,				0,				0,			0}, //Sniff
+							{-2,	   -2,			0,			0,				0,				3,				0,				0,			.4f}, //Wander
+							{-1,       -1,          0,          0,              0,              0,              2,             -1,			0} //run to howl
 			};
 		}
 		else
@@ -30,13 +30,13 @@ public class BehaviourMatrixInitializer : MonoBehaviour {
 			//more randomized weights
 			toReturn = new float[GlobalVars.wolfStateLength, GlobalVars.wolfEventLength]
 			{
-			//EventRows  SeeRabbit,SmellRabbit,OneWolfNear,TwoWolvesNear,ThreeWolvesNear,InStateFor30Seconds, HearHowl, friendAttacks, 
-							{1.2f,		0,		   .2f,		   .4f,			   .8f,				0,				.2f,		  .6f}, //ChaseRabbit
-							{.6f,		0,		  -.2f,		  -.4f,			  -.6f,				0,				0,				0}, //Howl
-							{.6f,		0,		   .2f,		  -.3f,		      -.6f,				0,				0,				0}, //Stalk
-							{-2,		1,			0,			0,				0,				0,				0,				0}, //Sniff
-							{-2,	   -2,			0,			0,				0,				3,				0,				0}, //Wander
-							{-1.2f,     -1.2f,      0,          0,              0,              0,              2,             -1} //run to howl
+			//EventRows  SeeRabbit,SmellRabbit,OneWolfNear,TwoWolvesNear,ThreeWolvesNear,InStateFor30Seconds, HearHowl, friendAttacks, InStateFor5Seconds
+							{.8f,		0,		   .2f,		   .2f,			   .4f,				0,				.2f,		  .6f,			0}, //ChaseRabbit
+							{.6f,		0,		  -.2f,		  -.4f,			  -.6f,				0,				0,				0,			0}, //Howl
+							{.6f,		0,		   .2f,		  -.3f,		      -.6f,				0,				0,				0,			0}, //Stalk
+							{-2,		1,			0,			0,				0,				0,				0,				0,			0}, //Sniff
+							{-2,	   -2,			0,			0,				0,				3,				0,				0,			0}, //Wander
+							{-1,       -1,          0,          0,              0,              0,              2,             -1,			0} //run to howl
 			};
 		}
 

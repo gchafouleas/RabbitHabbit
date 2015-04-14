@@ -62,7 +62,6 @@ public class RabbitBehavior : MonoBehaviour
 	private void MoveCharacter()
 	{
 		AudioSource sound = this.gameObject.GetComponent<AudioSource> (); 
-		Debug.Log(walking.isReadyToPlay);
         //Prevents the Rabbit from moving backwards
         if (Input.GetAxis ("LeftJoystickY") <= -1) {
 						movementVector = transform.right * Input.GetAxis ("LeftJoystickY") * movementSpeed;

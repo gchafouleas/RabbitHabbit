@@ -39,7 +39,8 @@ public class Wolf : MonoBehaviour
 
 	private float stateCounter = 0f; //how long you've been in one state for.
 	private const float stateCounterStayThreshold = 30f; //Do not change, tied to event name
-	private bool stateStayEventAlerted = false;
+	private bool stateStayEventAlerted30 = false;
+	private bool stateStayEventAlerted5 = false;
 	#endregion
 	//Kinematic movement variables
     private Vector3 directionVector = Vector3.zero;
@@ -96,12 +97,23 @@ public class Wolf : MonoBehaviour
 
 	private void UpdateStateCounterHandler()
 	{
-		if(!stateStayEventAlerted)
+
+		if (!stateStayEventAlerted5)
+		{
+			if (stateCounter > 5)
+			{
+
+				behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.InStateFor5Seconds, true);
+			}
+		}
+
+		if(!stateStayEventAlerted30)
 		{
 			stateCounter += Time.deltaTime;
+			
 			if(stateCounter > stateCounterStayThreshold)
 			{
-				stateStayEventAlerted = true;
+				stateStayEventAlerted30 = true;
 				behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.InStateFor30Seconds, true);
 			}
 		}
@@ -109,10 +121,13 @@ public class Wolf : MonoBehaviour
 
 	public void StateWasUpdated(GlobalVars.wolfState newState)
 	{
-		if(stateStayEventAlerted)
+		if(stateStayEventAlerted30)
 			behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.InStateFor30Seconds,false);
+		if (stateStayEventAlerted5)
+			behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.InStateFor5Seconds, false);
 
-		stateStayEventAlerted = false;
+		stateStayEventAlerted30 = false;
+		stateStayEventAlerted5 = false;
 		stateCounter = 0f;
 		currentWolfState = newState;
 	}
