@@ -467,6 +467,11 @@ public class Wolf : MonoBehaviour
     }
 	public void MaintainSight()
 	{
+		if (!rabbit)
+		{
+			RabbitLost();
+			return;
+		}
 		RaycastHit[] hits;
 		Vector3 rayToRabbit = rabbit.transform.position - transform.position;
 		hits = Physics.RaycastAll(transform.position, rayToRabbit.normalized, rayToRabbit.magnitude);

@@ -17,12 +17,12 @@ public class BehaviourMatrixInitializer : MonoBehaviour {
 			toReturn = new float[GlobalVars.wolfStateLength, GlobalVars.wolfEventLength]
 			{
 			//EventRows  SeeRabbit,SmellRabbit,OneWolfNear,TwoWolvesNear,ThreeWolvesNear,InStateFor30Seconds, HearHowl, friendAttacks, 
-							{.8f,		0,		   .2f,		   .4f,			   .8f,				0,				.2f,		  .6f}, //ChaseRabbit
+							{.8f,		0,		   .2f,		   .2f,			   .4f,				0,				.2f,		  .6f}, //ChaseRabbit
 							{.6f,		0,		  -.2f,		  -.4f,			  -.6f,				0,				0,				0}, //Howl
 							{.6f,		0,		   .2f,		  -.3f,		      -.6f,				0,				0,				0}, //Stalk
 							{-2,		1,			0,			0,				0,				0,				0,				0}, //Sniff
 							{-2,	   -2,			0,			0,				0,				3,				0,				0}, //Wander
-							{-1,       -1,          0,          0,              0,              0,              2,             -1}
+							{-1,       -1,          0,          0,              0,              0,              2,             -1} //run to howl
 			};
 		}
 		else
@@ -31,12 +31,12 @@ public class BehaviourMatrixInitializer : MonoBehaviour {
 			toReturn = new float[GlobalVars.wolfStateLength, GlobalVars.wolfEventLength]
 			{
 			//EventRows  SeeRabbit,SmellRabbit,OneWolfNear,TwoWolvesNear,ThreeWolvesNear,InStateFor30Seconds, HearHowl, friendAttacks, 
-							{.4f,		0,		   .4f,		   .4f,			   .5f,				0,				.3f,		  .8f}, //ChaseRabbit
-							{.2f,		0,		  -.6f,		  -.4f,			  -.2f,				.4f,			0,				0}, //Howl
-							{.8f,		0,		   .2f,		  -.6f,		      -.6f,				.5f,			0,				0}, //Stalk
-							{-1,		.4f,			0,			0,				 0,				0,				0,				0}, //Sniff
-							{-2,	   -2,			0,			0,			   .2f,				3,				.2f,				0}, //Wander
-							{-1,       -1,          0,          0,              0,              0,              2,             -1}  //runToHowl
+							{1.2f,		0,		   .2f,		   .4f,			   .8f,				0,				.2f,		  .6f}, //ChaseRabbit
+							{.6f,		0,		  -.2f,		  -.4f,			  -.6f,				0,				0,				0}, //Howl
+							{.6f,		0,		   .2f,		  -.3f,		      -.6f,				0,				0,				0}, //Stalk
+							{-2,		1,			0,			0,				0,				0,				0,				0}, //Sniff
+							{-2,	   -2,			0,			0,				0,				3,				0,				0}, //Wander
+							{-1.2f,     -1.2f,      0,          0,              0,              0,              2,             -1} //run to howl
 			};
 		}
 
