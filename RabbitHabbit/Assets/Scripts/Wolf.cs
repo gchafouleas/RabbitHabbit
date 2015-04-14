@@ -9,16 +9,17 @@ public class Wolf : MonoBehaviour
     private bool stalkBehindRabbit;
     private bool stalkBesideRabbit;
     public GameObject rabbit;
+    public GameObject wolfThatHowledLocation;
+    private SentPelette pellet;
     public bool treeInTheWay = false;
-	public GlobalVars.wolfState currentWolfState = GlobalVars.wolfState.Wander;
+	public GlobalVars.wolfState currentWolfState;
     //Kinematic movement variables
-
 
 	private List<Wolf> wolveFriendsNear = new List<Wolf>();
 	public bool losingRabbit = false;
 	public float lostSightTime = 0f;
 	public float LOST_SIGHT_TIME_MAX = 5f;
-
+    private Vector3 treeAvoidanceTarget = Vector3.zero;
 	#region Counters
 	private float lostSightCounter = 0f;
 	private const float lostSightThreshold = 1f; //time till counter expires
@@ -37,7 +38,7 @@ public class Wolf : MonoBehaviour
 	#endregion
 	//Kinematic movement variables
     private Vector3 directionVector = Vector3.zero;
-    private float currentVelocity = 0f, maxRotateVelocity = 1.5f, maxSeekVelocity = 10f, maxFleeVelocity = 8f;
+    private float currentVelocity = 0f, maxRotateVelocity = 2.5f, maxSeekVelocity = 1f, maxFleeVelocity = 8f;
 	public BehaviourMatrix behaviourMatrix;
 	// Use this for initialization
 	void Start () 
@@ -57,20 +58,28 @@ public class Wolf : MonoBehaviour
 		switch (currentWolfState)
 		{
 			case GlobalVars.wolfState.ChaseRabbit:
+                maxSeekVelocity = 2;
 				Charge();
 				break;
 			case GlobalVars.wolfState.Howl:
 				Howl();
 				break;
 			case GlobalVars.wolfState.Sniff:
+                maxSeekVelocity = 1;
 				SniffTrail();
 				break;
 			case GlobalVars.wolfState.Stalk:
+                maxSeekVelocity = 1;
 				Stalk();
 				break;
 			case GlobalVars.wolfState.Wander:
+                maxSeekVelocity = 1;
 				Wander();
 				break;
+            case GlobalVars.wolfState.RunToHowl:
+                if(wolfThatHowledLocation != null)
+                    RunToHowl(wolfThatHowledLocation);
+                break;
 		}
 	}
 
@@ -171,16 +180,62 @@ public class Wolf : MonoBehaviour
 
     private void Charge()
     {
+        if (!treeInTheWay)
+        {
+            KinematicSeek(rabbit);
+        }
+        else
+        {
+            AvoidTree();
+        }
     }
 
-    private void RunToHowl()
+    private void RunToHowl(GameObject wolfLocation)
     {
+        if (!treeInTheWay)
+        {
+            KinematicSeek(wolfLocation);
+        }
+        else
+        {
+            AvoidTree(); 
+        }
+    }
+
+    private void AvoidTree()
+    {
+        // If the target for avoiding a tree is not set, set it
+        if (treeAvoidanceTarget == Vector3.zero)
+        {
+            treeAvoidanceTarget = new Vector3(this.transform.position.x - 1, this.transform.position.y, this.transform.position.z + 2);
+        }
+
+        // rotate towards the new tree avoidance target
+        if (rotateTowards(treeAvoidanceTarget))
+        {
+            //If the wolf rotated towards the target starts seeking it
+            KinematicSeekVector(treeAvoidanceTarget);
+        }
+
+        // If the distance between the wolf and the avoidance target is small, the tree should not be in the way.
+        if (Vector3.Distance(this.transform.position, treeAvoidanceTarget) < 0.1f)
+        {
+            treeInTheWay = false;
+            treeAvoidanceTarget = Vector3.zero;
+        }
 
     }
 
     private void Stalk()
     {
-
+        if (!treeInTheWay)
+        {
+            KinematicSeek(rabbit);
+        }
+        else
+        {
+            AvoidTree();
+        }
     }
 
     private void SniffTrail()
@@ -190,6 +245,26 @@ public class Wolf : MonoBehaviour
 		behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.SmellRabbit, true);
 
 		//should be alerted of the next node and go that way
+        if (!treeInTheWay)
+        {
+            KinematicSeekVector(pellet.transform.position);
+        }
+        else
+        {
+            AvoidTree();
+        }
+
+        if (Vector3.Distance(this.transform.position, pellet.transform.position) < 0.1)
+        {
+            if (pellet.NextSentPelette != null)
+            {
+                pellet = pellet.NextSentPelette;
+            }
+            else
+            {
+                //TODO Matt: Change Action/Event when last pellet has been reached.
+            }
+        }
     }
 
     private void Howl()
@@ -198,7 +273,7 @@ public class Wolf : MonoBehaviour
         foreach (GameObject wolf in wolves)
         {
             if (wolf != this.gameObject)
-                wolf.GetComponent<Wolf>().HowlHeard();
+                wolf.GetComponent<Wolf>().HowlHeard(this.gameObject);
         }
     }
 
@@ -208,14 +283,25 @@ public class Wolf : MonoBehaviour
     }
 	 
 
-    public void HowlHeard()
+    public void HowlHeard(GameObject wolfObject)
     {
+        wolfThatHowledLocation = wolfObject;
 		if (!heardHowl)
 		{
 			behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.HearHowl, true);
 			heardHowl = true;
 		}
     }
+    public void KinematicSeekVector(Vector3 target)
+    {
+        directionVector = (target - transform.position);
+        directionVector.Normalize();
+        Quaternion targetRotation = Quaternion.LookRotation(directionVector);
+        this.transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, maxRotateVelocity * Time.deltaTime);
+        Vector3 newPos = transform.position + (maxSeekVelocity * Time.deltaTime) * directionVector;
+        transform.position = newPos;
+    }
+
     public void KinematicSeek(GameObject target)
     {
         directionVector = (target.transform.position - transform.position);
@@ -271,6 +357,21 @@ public class Wolf : MonoBehaviour
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, maxRotateVelocity * Time.deltaTime);
         Vector3 newPos = transform.position + (maxFleeVelocity * Time.deltaTime) * directionVector;
         transform.position = newPos;
+    }
+
+    public bool rotateTowards(Vector3 targetPosition)
+    {
+        Quaternion targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
+
+        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 3 * Time.deltaTime);
+        if (transform.rotation == targetRotation)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public void RabbitDetected(GameObject _rabbit)

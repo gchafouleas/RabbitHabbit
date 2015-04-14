@@ -556,6 +556,7 @@ GameObject:
   - 114: {fileID: 11427104}
   - 65: {fileID: 6543640}
   - 54: {fileID: 5443640}
+  - 65: {fileID: 6568668}
   m_Layer: 0
   m_Name: wolf
   m_TagString: Untagged
@@ -1088,8 +1089,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 141348}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: .809000015, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -1.61199999, y: .809000015, z: 0}
+  m_LocalScale: {x: .699999988, y: 1, z: .699999988}
   m_Children:
   - {fileID: 441346}
   - {fileID: 480278}
@@ -1104,8 +1105,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 162634}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -.272000015, z: 1.34300005}
-  m_LocalScale: {x: 1, y: .25, z: 1}
+  m_LocalPosition: {x: 0, y: -.34799999, z: 1.22000003}
+  m_LocalScale: {x: .330000013, y: .25, z: .790000021}
   m_Children: []
   m_Father: {fileID: 441348}
   m_RootOrder: 3
@@ -1172,6 +1173,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &6568668
+BoxCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 141348}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: .360000014, y: .150000006, z: 1}
+  m_Center: {x: 0, y: -.349999994, z: .340000004}
 --- !u!65 &6580280
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -1192,7 +1205,7 @@ Animation:
   m_GameObject: {fileID: 141346}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400002, guid: 2c2bd3d067467cd4280c1f645dda39e2, type: 3}
+  m_Animation: {fileID: 7400008, guid: 2c2bd3d067467cd4280c1f645dda39e2, type: 3}
   m_Animations:
   - {fileID: 7400002, guid: 2c2bd3d067467cd4280c1f645dda39e2, type: 3}
   - {fileID: 7400004, guid: 2c2bd3d067467cd4280c1f645dda39e2, type: 3}
@@ -1297,6 +1310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rabbit: {fileID: 0}
+  wolfThatHowledLocation: {fileID: 0}
   treeInTheWay: 0
   currentWolfState: 4
   losingRabbit: 0
