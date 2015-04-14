@@ -129,4 +129,19 @@ public class RabbitBehavior : MonoBehaviour
 		float donePercentage = Mathf.Min(1F, Time.deltaTime / timeToComplete);
 		ObjectToRotate.transform.rotation = Quaternion.Slerp(ObjectToRotate.transform.rotation, lookRotation, donePercentage);
 	}
+
+	public void OnCollisionEnter(Collision collision)
+	{
+		if(collision.gameObject.CompareTag("Wolf"))
+		{
+			GamePlayController gpc = GameObject.FindObjectOfType<GamePlayController>();
+			gpc.RestartPannel.SetActive(true);
+			GameObject[] allWolves = GameObject.FindGameObjectsWithTag("Wolf");
+ 			foreach(GameObject wolf in allWolves)
+			{
+				wolf.GetComponent<BehaviourRecorder>().EndRecorder(true);
+			}
+			
+		}
+	}
 }

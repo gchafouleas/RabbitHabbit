@@ -58,9 +58,12 @@ public class BehaviourRecorder : MonoBehaviour {
 	/// </summary>
 	public void EndRecorder(bool successfulHunt)
 	{
-		matrix.RebalanceStates (successfulHunt, recording);
-		recording.Clear ();
-		recorderIsActive = false;
+		if (recorderIsActive)
+		{
+			matrix.RebalanceStates(successfulHunt, recording);
+			recorderIsActive = false;
+		}
+		recording.Clear();
 	}
 
 	/// <summary>
