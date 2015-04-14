@@ -7,6 +7,7 @@ public class BehaviourMatrix : MonoBehaviour {
 	public BehaviourRecorder behaviourRecorder;
 	public List<GlobalVars.wolfEvent> encounterStarterEvents = new List<GlobalVars.wolfEvent>() { GlobalVars.wolfEvent.SeeRabbit, GlobalVars.wolfEvent.SmellRabbit};
 	public Wolf wolfParent;
+	public float pointsRebalanced = 0f;
 	public GlobalVars.wolfState currentWolfState = GlobalVars.wolfState.Wander;
 
 	public float[,] behaviourMatrix;
@@ -19,6 +20,13 @@ public class BehaviourMatrix : MonoBehaviour {
 		activeEvents = new bool[GlobalVars.wolfEventLength] { false, false, false, false, false, false, false, false };
 	}
 
+	public void ResetBehaviourMatrix()
+	{
+		currentWolfState = GlobalVars.wolfState.Wander;
+		wolfParent.currentWolfState = GlobalVars.wolfState.Wander;
+		pointsRebalanced = 0f;
+		activeEvents = new bool[GlobalVars.wolfEventLength] { false, false, false, false, false, false, false, false };
+	}
 	public void RecieveEvent(GlobalVars.wolfEvent newEvent, bool eventIsActive)
 	{
 		activeEvents[(int)newEvent] = eventIsActive;
@@ -57,10 +65,12 @@ public class BehaviourMatrix : MonoBehaviour {
 				if (encounterSuccessful)
 				{
 					behaviourMatrix[(int)kv.Key, (int)involvedEvents] += GlobalVars.reward;
+					pointsRebalanced += GlobalVars.reward;
 				}
 				else
 				{
 					behaviourMatrix[(int)kv.Key, (int)involvedEvents] -= GlobalVars.punishment;
+					pointsRebalanced += GlobalVars.punishment;
 				}
 			}
 		}
