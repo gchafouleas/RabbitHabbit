@@ -43,7 +43,7 @@ public class GamePlayController : MonoBehaviour {
 		rabbit.GetComponent<RabbitBehavior> ().SetInitialPellets (); 
 		RestartPannel.SetActive (false);
 		BreedHighestScoringWolves();
-		GameObject[] allWolves = GameObject.FindGameObjectsWithTag("Wolf");
+		Wolf[] allWolves = GameObject.FindObjectsOfType<Wolf>();
 		allWolves[0].transform.position = new Vector3 (-60,0.8f,41); 
 		allWolves[1].transform.position = new Vector3 (-61,0.8f,41);
 		allWolves[2].transform.position = new Vector3 (-59,0.8f,41);
@@ -59,35 +59,35 @@ public class GamePlayController : MonoBehaviour {
 
 	private void BreedHighestScoringWolves()
 	{
-		GameObject[] allWolves = GameObject.FindGameObjectsWithTag("Wolf");
+		Wolf[] allWolves = GameObject.FindObjectsOfType<Wolf>();;
 		//probably could do this with lambda/linq
 		float highestScore = -1;
 		GameObject bestWolf = null;
 		float secondHighestScore = -1;
 		GameObject secondBestWolf = null;
 
-		foreach(GameObject wolf in allWolves)
+		foreach(Wolf wolf in allWolves)
 		{
-			float score = wolf.GetComponent<BehaviourMatrix>().pointsRebalanced;
+			float score = wolf.gameObject.GetComponent<BehaviourMatrix>().pointsRebalanced;
 			if(score > highestScore)
 			{
 				if (bestWolf)
 					secondBestWolf = bestWolf;
-				bestWolf = wolf;
+				bestWolf = wolf.gameObject;
 				highestScore = score;
 			}
 			else if(score > secondHighestScore)
 			{
 				secondHighestScore = score;
-				secondBestWolf = wolf;
+				secondBestWolf = wolf.gameObject;
 			}
 		}
 
 		List<GameObject> childrenWolf = new List<GameObject>();
-		foreach(GameObject wolf in allWolves)
+		foreach(Wolf wolf in allWolves)
 		{
-			if (wolf != bestWolf && wolf != secondBestWolf)
-				childrenWolf.Add(wolf);
+			if (wolf.gameObject != bestWolf && wolf.gameObject != secondBestWolf)
+				childrenWolf.Add(wolf.gameObject);
 		}
 
 		float[][,] newChildren = bestWolf.GetComponent<BehaviourMatrix>().createOffspring(secondBestWolf.GetComponent<BehaviourMatrix>().behaviourMatrix);

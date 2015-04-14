@@ -7,15 +7,15 @@ public class BurrowCollider : MonoBehaviour {
 	{
 		if(collider.CompareTag("Rabbit"))
 		{
-			GameObject[] allWolves = GameObject.FindGameObjectsWithTag("Wolf");
-			foreach (GameObject wolf in allWolves)
+			Wolf[] allWolves = GameObject.FindObjectsOfType<Wolf>();
+			foreach (Wolf wolf in allWolves)
 			{
-				wolf.GetComponent<BehaviourRecorder>().EndRecorder(false);
+				wolf.gameObject.GetComponent<BehaviourRecorder>().EndRecorder(false);
 			}
 			GamePlayController gamePlayController = GameObject.FindObjectOfType<GamePlayController>();
 			gamePlayController.wins++; 
 			gamePlayController.winText.text = "Wins: "+gamePlayController.wins;  
-			gamePlayController.winText.text = "Loses: "+gamePlayController.loses;
+			gamePlayController.losesText.text = "Loses: "+gamePlayController.loses;
 			gamePlayController.RestartPannel.SetActive(true);
 		}
 	}
