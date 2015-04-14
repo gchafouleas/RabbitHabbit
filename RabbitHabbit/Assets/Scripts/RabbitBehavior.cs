@@ -68,7 +68,6 @@ public class RabbitBehavior : MonoBehaviour
 						movementVector = transform.right * Input.GetAxis ("LeftJoystickY") * movementSpeed;
 						characterController.Move (movementVector * Time.deltaTime);
 						rabbitAnimation.CrossFade ("run", 0.01f);
-			Debug.Log(walking.isReadyToPlay); 
 			SoundTimer += Time.deltaTime; 
 			if(SoundTimer >= MAX_SOUND_TIMER)
 			{

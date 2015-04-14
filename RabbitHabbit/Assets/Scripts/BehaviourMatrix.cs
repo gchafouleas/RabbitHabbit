@@ -137,11 +137,19 @@ public class BehaviourMatrix : MonoBehaviour {
 	private GlobalVars.wolfState CheckForOptimalState()
 	{
 		float[] scores = new float[GlobalVars.wolfStateLength]{0,0,0,0,0};
-
-		for (int i_state = 0; i_state < GlobalVars.wolfStateLength; i_state++)		
-			for(int i_event = 0; i_event < GlobalVars.wolfEventLength; i_event++)			
-				if(activeEvents[(int)i_event])				
-					scores[i_state] += behaviourMatrix[i_state, i_event];							
+		//Chase and stalk 0,2 require wolf.rabbit
+		//3 requires wolf.smeltRabbit
+		for (int i_state = 0; i_state < GlobalVars.wolfStateLength; i_state++)
+		{
+			if(((i_state == 0 || i_state == 2) && (!wolfParent.rabbit)) || (i_state == 3 && !wolfParent.smeltRabbit))
+			{
+				scores[i_state] = -5f;
+				continue; //invalid states if no rabbit sighted or smelt
+			}
+			for (int i_event = 0; i_event < GlobalVars.wolfEventLength; i_event++)
+				if (activeEvents[(int)i_event])
+					scores[i_state] += behaviourMatrix[i_state, i_event];
+		}
 				
 		int winningState = 0;
 		float winningScore = -999f;
@@ -149,11 +157,12 @@ public class BehaviourMatrix : MonoBehaviour {
 		{
 			if(scores[i] > winningScore)
 			{
+				
 				winningScore = scores[i];
 				winningState = i;
 			}
 		}
-
+		
 		return (GlobalVars.wolfState)winningState;
 	}
 	private void ChangeState(GlobalVars.wolfState newState)

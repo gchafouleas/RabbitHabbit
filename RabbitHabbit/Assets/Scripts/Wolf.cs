@@ -29,7 +29,7 @@ public class Wolf : MonoBehaviour
 	private float lostSightCounter = 0f;
 	private const float lostSightThreshold = 1f; //time till counter expires
 
-	private bool smeltRabbit = false;
+	public bool smeltRabbit = false;
 	private float lostSmellCounter = 0f;
 	private const float lostSmellThreshold = 5f; //5 seconds if no smell
 
