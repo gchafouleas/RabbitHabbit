@@ -260,6 +260,11 @@ public class Wolf : MonoBehaviour
 		{
 			AvoidBoundary(); 
 		}
+		if (Vector3.Distance(this.gameObject.transform.position, wolfLocation.transform.position) < 2)
+		{
+			behaviourMatrix.RecieveEvent(GlobalVars.wolfEvent.HearHowl, false);
+			wolfThatHowledLocation = null;
+		}
     }
 
     private void AvoidTree()
