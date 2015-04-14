@@ -193,6 +193,7 @@ public class Wolf : MonoBehaviour
 
     private void Charge()
     {
+
     }
 
     private void RunToHowl()
@@ -202,7 +203,7 @@ public class Wolf : MonoBehaviour
 
     private void Stalk()
     {
-
+		Charge();
     }
 
     private void SniffTrail()
