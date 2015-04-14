@@ -32,6 +32,7 @@ public class GamePlayController : MonoBehaviour {
 	public void OnRestartClick()
 	{
 		var rabbit = GameObject.FindGameObjectWithTag ("Rabbit"); 
+		rabbit.GetComponent<RabbitBehavior> ().enabled = true; 
 		rabbit.GetComponent<RabbitBehavior> ().CanAddPelettes = false; 
 		SentPelette[] pellets = GameObject.FindObjectsOfType<SentPelette> (); 
 		for(int i = 0; i< pellets.Length; i++)

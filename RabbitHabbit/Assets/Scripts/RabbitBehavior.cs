@@ -137,12 +137,12 @@ public class RabbitBehavior : MonoBehaviour
 			gpc.winText.text = "Wins: "+gpc.wins;  
 			gpc.losesText.text = "Loses: "+gpc.loses;
 			gpc.RestartPannel.SetActive(true);
-			Wolf[] allWolves = GameObject.FindObjectsOfType<Wolf>();
+			Wolf[] allWolves = GameObject.FindObjectsOfType<Wolf>(); 
  			foreach(Wolf wolf in allWolves)
 			{
 				wolf.gameObject.GetComponent<BehaviourRecorder>().EndRecorder(true);
 			}
-			
+			this.enabled = false;
 		}
 	}
 }
