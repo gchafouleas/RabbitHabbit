@@ -8,6 +8,9 @@ public class BurrowCollider : MonoBehaviour {
 		if(collider.CompareTag("Rabbit"))
 		{
 			GamePlayController gamePlayController = GameObject.FindObjectOfType<GamePlayController>();  
+			gamePlayController.wins++; 
+			gamePlayController.winText.text = "Wins: "+gamePlayController.wins;  
+			gamePlayController.winText.text = "Loses: "+gamePlayController.loses;
 			gamePlayController.RestartPannel.SetActive(true); 
 		}
 	}

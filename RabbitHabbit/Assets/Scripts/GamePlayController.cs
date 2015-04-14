@@ -10,6 +10,10 @@ public class GamePlayController : MonoBehaviour {
 	public GameObject Rabbit; 
 	public GameObject RestartPannel; 
 	public GameObject Wolf; 
+	public Text winText; 
+	public Text losesText; 
+	public int wins =0; 
+	public int loses =0; 
 	// Use this for initialization
 	void Start ()
 	{
