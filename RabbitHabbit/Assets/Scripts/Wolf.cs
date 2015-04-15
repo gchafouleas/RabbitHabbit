@@ -48,6 +48,8 @@ public class Wolf : MonoBehaviour
 	public BehaviourMatrix behaviourMatrix;
 	public bool boundaryInWay = false; 
 	private Vector3 boundaryAvoidanceTarget = Vector3.zero; 
+	private int wanderCount = 100; 
+	private Vector3 wanderTarget; 
 	// Use this for initialization
 	void Start () 
     {
@@ -91,6 +93,9 @@ public class Wolf : MonoBehaviour
                 if(wolfThatHowledLocation != null)
                     RunToHowl(wolfThatHowledLocation);
                 break;
+		default: 
+			Wander(); 
+			break; 
 		}
 		AngleFix();
 	}
@@ -217,23 +222,22 @@ public class Wolf : MonoBehaviour
     {
 		if(!treeInTheWay && !boundaryInWay)
 		{
-			//if you have idled long enough, find a new wander direction and go directly toward it
-			if (stopWanderTimer == 0)
+			if(wanderCount == 100)
 			{
-				wanderDirection = new Vector3(Random.rotation.x, 0f, Random.rotation.z);
-				rotateTowards (wanderDirection);
-				//transform.rotation = Quaternion.LookRotation(wanderDirection, Vector3.up);
-				wanderTimer = (Random.value) + 1f;
-				stopWanderTimer = 1f;
+				float number = Random.Range(-1, 3);
+				wanderTarget.x = transform.position.x + 2 * (Mathf.Cos(number));
 				
-				wanderDirection.Normalize();
-				rigidbody.velocity = wanderDirection * moveSpeed;
+				wanderTarget.y = transform.position.y + 2 * (Mathf.Sin(number));
+				wanderCount = 0; 
 			}
-			else if (wanderTimer == 0)
-			{ //if you have wandered long enough, stop moving for some time
-				rigidbody.velocity = Vector3.zero;
-				stopWanderTimer = Mathf.Max(0, stopWanderTimer - Time.deltaTime);
-			}
+			
+			Vector3 newOriantation = wanderTarget - transform.position; 
+			newOriantation.y = transform.forward.y;
+			FaceTarget(newOriantation);
+			Vector3 velocity = (maxSeekVelocity * Time.deltaTime) * this.transform.forward;
+			Vector3 newPosition = new Vector3(transform.position.x + velocity.x, transform.position.y, transform.position.z + velocity.z);
+			transform.position = newPosition;
+			wanderCount++; 
 		}
 		else if( treeInTheWay)
 		{
@@ -468,7 +472,18 @@ public class Wolf : MonoBehaviour
         Vector3 newPos = transform.position + (maxFleeVelocity * Time.deltaTime) * directionVector;
         transform.position = newPos;
     }
-
+	private float  FaceTarget(Vector3 target) 
+	{
+		Vector3 velocityDirection = (target).normalized;
+		velocityDirection.y = transform.forward.y;
+		Quaternion lookRotation = Quaternion.LookRotation(velocityDirection);
+		
+		float angle = Quaternion.Angle(transform.rotation, lookRotation);
+		float timeToComplete = angle / 100f;
+		float donePercentage = Mathf.Min(1F, Time.deltaTime / timeToComplete);
+		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, donePercentage);
+		return timeToComplete; 
+	}
     public bool rotateTowards(Vector3 targetPosition)
     {
         Quaternion targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
