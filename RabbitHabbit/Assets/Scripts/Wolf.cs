@@ -353,8 +353,8 @@ public class Wolf : MonoBehaviour
 			{
 				AvoidTree();
 			}
-			
-			if (Vector3.Distance(this.transform.position, pellet.transform.position) < 0.1)
+
+			if (Vector3.Distance(this.transform.position, pellet.transform.position) < 1)
 			{
 				if (pellet.NextSentPelette != null)
 				{
@@ -482,7 +482,7 @@ public class Wolf : MonoBehaviour
 		float timeToComplete = angle / 100f;
 		float donePercentage = Mathf.Min(1F, Time.deltaTime / timeToComplete);
 		transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, donePercentage);
-		return timeToComplete; 
+		return timeToComplete;
 	}
     public bool rotateTowards(Vector3 targetPosition)
     {
