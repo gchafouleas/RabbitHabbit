@@ -486,17 +486,22 @@ public class Wolf : MonoBehaviour
 	}
     public bool rotateTowards(Vector3 targetPosition)
     {
-        Quaternion targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
-
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 3 * Time.deltaTime);
-        if (transform.rotation == targetRotation)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+		Quaternion targetRotation = Quaternion.LookRotation(targetPosition - transform.position);
+		
+		transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, 5 * Time.deltaTime);
+		Quaternion negTargetRotation = targetRotation; //make a negation of the targetRotation and test if it is that aswell
+		negTargetRotation.w = -negTargetRotation.w;
+		negTargetRotation.x = -negTargetRotation.x;
+		negTargetRotation.y = -negTargetRotation.y;
+		negTargetRotation.z = -negTargetRotation.z;
+		if (transform.rotation == targetRotation || transform.rotation == negTargetRotation)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
     }
 
     public void RabbitDetected(GameObject _rabbit)
