@@ -251,7 +251,7 @@ public class Wolf : MonoBehaviour
 
     private void Charge()
     {
-        if (!treeInTheWay && !boundaryInWay)
+        if (!treeInTheWay && !boundaryInWay && rabbit)
         {
             KinematicSeek(rabbit);
         }
@@ -373,6 +373,7 @@ public class Wolf : MonoBehaviour
 
     public void Howl()
     {
+		//GameObject.FindObjectOfType<RabbitAI>().HearHowl();
 		Wolf[] wolves = GameObject.FindObjectsOfType<Wolf>();
 		AudioSource sound = this.gameObject.GetComponent<AudioSource> ();
 		sound.Play (); 

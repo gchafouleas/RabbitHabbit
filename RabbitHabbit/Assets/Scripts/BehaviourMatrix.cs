@@ -173,10 +173,7 @@ public class BehaviourMatrix : MonoBehaviour {
 				winningState = i;
 			}
 		}
-
-		if ((GlobalVars.wolfState)winningState == GlobalVars.wolfState.Howl)
-			Debug.Log("I wanna howls");
-		
+				
 		return (GlobalVars.wolfState)winningState;
 	}
 	private void ChangeState(GlobalVars.wolfState newState)

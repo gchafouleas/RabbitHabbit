@@ -2,13 +2,20 @@
 using System.Collections;
 
 public class MainMenuController : MonoBehaviour {
+
+	public bool learnedAI = false;
+	void Start()
+	{
+		DontDestroyOnLoad(this.gameObject);
+	}
 	public void OnStartGameClick() 
 	{
 		Application.LoadLevel("GamePlay"); 
 	}
 
-	public void OnControlsClick() 
+	public void OnPremadeAIClick() 
 	{
-		Application.LoadLevel("Controls"); 
+		learnedAI = true;
+		Application.LoadLevel("GamePlay"); 
 	}
 }

@@ -22,7 +22,7 @@ public class RabbitBehavior : MonoBehaviour
 	public GameObject MainCamera; 
 
 	[SerializeField]
-	private float rotateSpeed = 3.0f;
+	public float rotateSpeed = 3.0f;
 	[SerializeField]
 	public float movementSpeed = 1.5f;
     private float rotationSpeed = 50f;
@@ -117,7 +117,7 @@ public class RabbitBehavior : MonoBehaviour
 			}
 		}
 	}
-	private void  FaceTarget(Vector3 target, GameObject ObjectToRotate) 
+	public void  FaceTarget(Vector3 target, GameObject ObjectToRotate) 
 	{
 		Vector3 velocityDirection = (target).normalized;
 		//velocityDirection.y = ObjectToRotate.transform.forward.y;
@@ -127,10 +127,9 @@ public class RabbitBehavior : MonoBehaviour
 		float donePercentage = Mathf.Min(1F, Time.deltaTime / timeToComplete);
 		ObjectToRotate.transform.rotation = Quaternion.Slerp(ObjectToRotate.transform.rotation, lookRotation, donePercentage);
 	}
-
 	public void OnTriggerEnter(Collider collision)
 	{
-		if(collision.gameObject.CompareTag("Wolf"))
+		if(collision.gameObject.CompareTag("Wolf") &&(!GameObject.FindObjectOfType<RabbitAI>()))
 		{
 			GamePlayController gpc = GameObject.FindObjectOfType<GamePlayController>();
 			gpc.loses++; 

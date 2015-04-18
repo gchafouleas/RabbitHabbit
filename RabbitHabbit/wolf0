@@ -1,0 +1,11 @@
+							ChaseRabbit , Howl , Stalk , Sniff , Wander , RunToHowl ,               
+SeeRabbit                   |4             3             0.6             -2             -2             -1             
+SmellRabbit                 |0             0             0             1             -2             -1             
+OneWolfNear                 |2.6             2.2             0.2             0             0             0             
+TwoWolvesNear               |0.2             -0.4             -0.3             0             0             0             
+ThreeWolvesNear             |0.4             -0.6             -0.6             0             0             0             
+InStateFor30Seconds         |0             1.799999             0             0             3             0             
+HearHowl                    |2.6             3.4             0             0             0             2             
+friendAttack                |0.6             0             0             0             0             -1             
+InStateFor5Seconds          |3.2             5.000004             0             0             0.4             0             
+
